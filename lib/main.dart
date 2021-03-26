@@ -34,17 +34,57 @@ class _MyHomePageState extends State<MyHomePage> {
           style: TextStyle(fontFamily: 'Poppins'),
         ),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-              style: TextStyle(fontFamily: 'Poppins'),
+      body: SizedBox.expand(
+        child: GestureDetector(
+            child: Container(
+              color: Colors.black,
             ),
-          ],
-        ),
+            onVerticalDragUpdate: (details) {
+              if (details.delta.dy < 10) {
+                Navigator.of(context).push(_createRoute());
+              }
+            }),
       ),
+    );
+  }
+
+  Route _createRoute() {
+    return PageRouteBuilder(
+      pageBuilder: (context, animation, secondaryAnimation) => SecondRoute(),
+      transitionsBuilder: (context, animation, secondaryAnimation, child) {
+        var begin = Offset(0.0, 1.0);
+        var end = Offset.zero;
+        var curve = Curves.ease;
+
+        var tween =
+            Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+
+        return SlideTransition(
+          position: animation.drive(tween),
+          child: child,
+        );
+      },
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Add"),
+      ),
+      body: GestureDetector(
+          child: Container(
+            color: Colors.pink,
+          ),
+          onVerticalDragUpdate: (details) {
+            if (details.delta.dy > 10) {
+              print("swipe to bottom");
+              Navigator.pop(context);
+            }
+          }),
     );
   }
 }
