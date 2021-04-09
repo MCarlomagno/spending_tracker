@@ -27,8 +27,11 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    const headerHeight = 150.0;
+    const headerHeight = 120.0;
     var contentWidth = MediaQuery.of(context).size.width * 0.8;
+    var contentMarginHorizontal =
+        MediaQuery.of(context).size.width - contentWidth;
+    var contentMarginVertical = 20.0;
     return Scaffold(
       appBar: AppBar(
           backgroundColor: Colors.transparent,
@@ -65,23 +68,33 @@ class _MyHomePageState extends State<MyHomePage> {
       body: SizedBox.expand(
         child: Container(
           alignment: Alignment.center,
-          width: contentWidth,
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
+              SizedBox(
+                height: contentMarginVertical,
+              ),
               Text(
                 "Balance",
                 style: TextStyle(
                   fontSize: 20,
                 ),
               ),
+              SizedBox(
+                height: contentMarginVertical,
+              ),
               BalanceBanner(),
+              SizedBox(
+                height: contentMarginVertical,
+              ),
               Text(
                 "Transactions",
                 style: TextStyle(
                   fontSize: 20,
                 ),
+              ),
+              SizedBox(
+                height: contentMarginVertical,
               ),
               TransactionsTable(),
             ],
@@ -89,7 +102,14 @@ class _MyHomePageState extends State<MyHomePage> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showModalBottomSheet(
+              context: context,
+              builder: (BuildContext context) {
+                return Container();
+              });
+        },
+        backgroundColor: Color(0xFF5BC8AA),
         child: Icon(Icons.add),
       ),
     );
