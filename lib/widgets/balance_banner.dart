@@ -3,9 +3,12 @@ import 'package:flutter/material.dart';
 class BalanceBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var bannerWidth = MediaQuery.of(context).size.width * 0.8;
+    var bannerWidth = MediaQuery.of(context).size.width * 0.9;
     const bannerHeight = 150.0;
     return Container(
+      width: bannerWidth,
+      height: bannerHeight,
+      padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Colors.red,
@@ -15,9 +18,6 @@ class BalanceBanner extends StatelessWidget {
           colors: <Color>[Color(0xFFEC3E7C), Color(0xFFF65050)],
         ),
       ),
-      padding: EdgeInsets.all(20),
-      width: bannerWidth,
-      height: bannerHeight,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
