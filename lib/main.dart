@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spending_tracker/widgets/balance_banner.dart';
+import 'package:spending_tracker/widgets/transactions_table.dart';
 
 void main() {
   runApp(MyApp());
@@ -82,11 +83,7 @@ class _MyHomePageState extends State<MyHomePage> {
                   fontSize: 20,
                 ),
               ),
-              Container(
-                height: 400,
-                width: contentWidth,
-                color: Colors.grey,
-              )
+              TransactionsTable(),
             ],
           ),
         ),
