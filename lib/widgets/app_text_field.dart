@@ -2,18 +2,23 @@ import 'package:flutter/material.dart';
 
 class AppTextField extends StatelessWidget {
   AppTextField(
-      {Key key,
+      {Key? key,
       @required this.labelText,
-      this.keyboardType = TextInputType.text})
+      @required this.controller,
+      this.keyboardType = TextInputType.text,
+      this.autofocus = false})
       : super(key: key);
 
-  final String labelText;
+  final String? labelText;
+  final TextEditingController? controller;
   final TextInputType keyboardType;
+  final bool autofocus;
 
   @override
   Widget build(BuildContext context) {
     return TextField(
-      autofocus: true,
+      controller: this.controller,
+      autofocus: this.autofocus,
       cursorColor: Color(0xFF5BC8AA),
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
