@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/widgets/app_text_field.dart';
 
 class AddTransactionForm extends StatelessWidget {
   @override
@@ -10,16 +11,15 @@ class AddTransactionForm extends StatelessWidget {
           SizedBox(
             height: 10,
           ),
-          TextField(
-            autofocus: true,
-            decoration: InputDecoration(labelText: "Amount"),
+          AppTextField(
+            labelText: "Amount",
             keyboardType: TextInputType.number,
           ),
           SizedBox(
             height: 10,
           ),
-          TextField(
-            decoration: InputDecoration(labelText: "Description"),
+          AppTextField(
+            labelText: "Description",
           ),
           SizedBox(
             height: 10,
