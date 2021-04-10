@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/widgets/add_transaction_form.dart';
 import 'package:spending_tracker/widgets/balance_banner.dart';
 import 'package:spending_tracker/widgets/transactions_table.dart';
 
@@ -106,7 +107,7 @@ class _MyHomePageState extends State<MyHomePage> {
           showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
-                return Container();
+                return AddTransactionForm();
               });
         },
         backgroundColor: Color(0xFF5BC8AA),
