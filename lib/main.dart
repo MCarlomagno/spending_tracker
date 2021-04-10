@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/add_transaction_form.dart';
 import 'package:spending_tracker/widgets/balance_banner.dart';
 import 'package:spending_tracker/widgets/transactions_table.dart';
 
 void main() {
+  setupServices();
   runApp(MyApp());
 }
 
@@ -19,7 +21,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key}) : super(key: key);
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
