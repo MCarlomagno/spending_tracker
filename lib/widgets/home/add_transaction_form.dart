@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:spending_tracker/models/transaction.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
-import 'package:spending_tracker/shared/subtitle.dart';
-import 'package:spending_tracker/widgets/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
 class AddTransactionForm extends StatefulWidget {
   @override
