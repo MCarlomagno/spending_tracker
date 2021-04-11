@@ -12,8 +12,6 @@ class TransactionModel extends ChangeNotifier {
 
   void add(Transaction transaction) {
     _transactions.add(transaction);
-    print("new transaction added!");
-    print(transaction);
     notifyListeners();
   }
 }

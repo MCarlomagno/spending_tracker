@@ -52,8 +52,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             height: 50,
             minWidth: MediaQuery.of(context).size.width - 60,
             color: Color(0xFF5BC8AA),
-            onPressed: () {
-              _createTransaction();
+            onPressed: () async {
+              await _createTransaction();
               Navigator.pop(context);
             },
             child: Text(
