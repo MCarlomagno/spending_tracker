@@ -1,17 +1,17 @@
 import 'dart:collection';
 import 'package:flutter/foundation.dart';
-import 'package:spending_tracker/interfaces/transaction.dart';
+import 'package:spending_tracker/interfaces/payment.dart';
 
-class TransactionModel extends ChangeNotifier {
-  final List<Transaction> _transactions = [];
-  UnmodifiableListView<Transaction> get transactions =>
-      UnmodifiableListView(_transactions);
+class PaymentModel extends ChangeNotifier {
+  final List<Payment> _payments = [];
+  UnmodifiableListView<Payment> get transactions =>
+      UnmodifiableListView(_payments);
 
   double get balance =>
-      _transactions.fold(0.0, (value, element) => value + element.amount);
+      _payments.fold(0.0, (value, element) => value + element.amount);
 
-  void add(Transaction transaction) {
-    _transactions.add(transaction);
+  void add(Payment payment) {
+    _payments.add(payment);
     notifyListeners();
   }
 }

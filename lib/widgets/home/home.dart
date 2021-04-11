@@ -48,13 +48,13 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       floatingActionButton: FloatingActionButton(
         onPressed: () {
-          final transactionModel =
-              Provider.of<TransactionModel>(context, listen: false);
+          final paymentModel =
+              Provider.of<PaymentModel>(context, listen: false);
           showModalBottomSheet(
               context: context,
               builder: (BuildContext context) {
                 return ListenableProvider.value(
-                  value: transactionModel,
+                  value: paymentModel,
                   child: AddTransactionForm(),
                 );
               });
