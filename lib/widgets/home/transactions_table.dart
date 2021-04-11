@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/interfaces/transaction.dart';
+import 'package:spending_tracker/interfaces/payment.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
 
 class TransactionsTable extends StatefulWidget {
@@ -13,9 +13,8 @@ class _TransactionsTableState extends State<TransactionsTable> {
   Widget build(BuildContext context) {
     var tableHeight = MediaQuery.of(context).size.height * 0.4;
     var tableWidth = MediaQuery.of(context).size.width * 0.9;
-    return Consumer<TransactionModel>(
-        builder: (context, transactionModel, child) {
-      List<Transaction> transactions = transactionModel.transactions;
+    return Consumer<PaymentModel>(builder: (context, transactionModel, child) {
+      List<Payment> transactions = transactionModel.transactions;
 
       return Container(
         height: tableHeight,
@@ -40,20 +39,20 @@ class _TransactionsTableState extends State<TransactionsTable> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
               ],
-              rows: transactions.map<DataRow>((Transaction transaction) {
+              rows: transactions.map<DataRow>((Payment payment) {
                 return DataRow(
                   cells: <DataCell>[
                     DataCell(
                       Text(
-                        this._dateTimeFormatString(transaction.dateTime),
+                        this._dateTimeFormatString(payment.date),
                       ),
                     ),
                     DataCell(
-                      Text(transaction.detail ?? "no detail"),
+                      Text(payment.detail ?? "no detail"),
                     ),
                     DataCell(
                       Text(
-                        this._amountFormatString(transaction.amount),
+                        this._amountFormatString(payment.amount),
                       ),
                     ),
                   ],
