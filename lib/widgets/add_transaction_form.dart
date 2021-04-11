@@ -60,7 +60,9 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   _createTransaction() {
     var amount = double.parse(this._amountController.text);
     var detail = this._detailController.text;
-    var transaction = new Transaction(amount: amount, detail: detail);
+    var dateTime = DateTime.now();
+    var transaction =
+        new Transaction(amount: amount, dateTime: dateTime, detail: detail);
     _transactionsService.create(transaction: transaction);
   }
 
