@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:spending_tracker/models/transaction.dart';
+import 'package:provider/provider.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
+import 'package:spending_tracker/models/transactions_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
@@ -64,13 +66,14 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     );
   }
 
-  _createTransaction() {
+  _createTransaction() async {
     var amount = double.parse(this._amountController.text);
     var detail = this._detailController.text;
     var dateTime = DateTime.now();
     var transaction =
         new Transaction(amount: amount, dateTime: dateTime, detail: detail);
-    _transactionsService.create(transaction: transaction);
+    await _transactionsService.create(transaction: transaction);
+    Provider.of<TransactionModel>(context, listen: false).add(transaction);
   }
 
   @override

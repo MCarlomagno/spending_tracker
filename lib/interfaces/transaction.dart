@@ -1,5 +1,3 @@
-import 'package:flutter/widgets.dart';
-
 class Transaction {
   double amount;
   DateTime dateTime;
