@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:spending_tracker/models/transaction.dart';
+import 'package:provider/provider.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
+import 'package:spending_tracker/models/transactions_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
-import 'package:spending_tracker/widgets/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
 class AddTransactionForm extends StatefulWidget {
   @override
@@ -21,6 +24,12 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
+          SizedBox(
+            height: 10,
+          ),
+          Subtitle(
+            text: "New Transaction",
+          ),
           SizedBox(
             height: 10,
           ),
@@ -43,8 +52,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             height: 50,
             minWidth: MediaQuery.of(context).size.width - 60,
             color: Color(0xFF5BC8AA),
-            onPressed: () {
-              _createTransaction();
+            onPressed: () async {
+              await _createTransaction();
               Navigator.pop(context);
             },
             child: Text(
@@ -57,11 +66,14 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     );
   }
 
-  _createTransaction() {
+  _createTransaction() async {
     var amount = double.parse(this._amountController.text);
     var detail = this._detailController.text;
-    var transaction = new Transaction(amount: amount, detail: detail);
-    _transactionsService.create(transaction: transaction);
+    var dateTime = DateTime.now();
+    var transaction =
+        new Transaction(amount: amount, dateTime: dateTime, detail: detail);
+    await _transactionsService.create(transaction: transaction);
+    Provider.of<TransactionModel>(context, listen: false).add(transaction);
   }
 
   @override
