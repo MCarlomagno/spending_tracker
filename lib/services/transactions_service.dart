@@ -1,10 +1,12 @@
-import 'package:spending_tracker/interfaces/transaction.dart';
+import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/repositories/transactions_repository.dart';
 
 class TransactionsService {
-  List<Transaction> _transactions = [];
+  List<Payment> _transactions = [];
 
-  create({required Transaction transaction}) async {
-    await Future.delayed(Duration(milliseconds: 1000));
-    this._transactions.add(transaction);
+  create({required Payment payment}) async {
+    var repo = new TransactionsRepository();
+    await repo.create(payment);
+    this._transactions.add(payment);
   }
 }
