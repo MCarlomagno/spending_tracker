@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:spending_tracker/setup.dart';
+import 'package:spending_tracker/shared/subtitle.dart';
 import 'package:spending_tracker/widgets/add_transaction_form.dart';
 import 'package:spending_tracker/widgets/balance_banner.dart';
 import 'package:spending_tracker/widgets/transactions_table.dart';
@@ -77,12 +78,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: contentMarginVertical,
               ),
-              Text(
-                "Balance",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
+              Subtitle(text: "Balance"),
               SizedBox(
                 height: contentMarginVertical,
               ),
@@ -90,12 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               SizedBox(
                 height: contentMarginVertical,
               ),
-              Text(
-                "Transactions",
-                style: TextStyle(
-                  fontSize: 20,
-                ),
-              ),
+              Subtitle(text: "Transactions"),
               SizedBox(
                 height: contentMarginVertical,
               ),

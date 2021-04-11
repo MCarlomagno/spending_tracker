@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:spending_tracker/models/transaction.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
+import 'package:spending_tracker/shared/subtitle.dart';
 import 'package:spending_tracker/widgets/app_text_field.dart';
 
 class AddTransactionForm extends StatefulWidget {
@@ -21,6 +22,12 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Column(
         children: [
+          SizedBox(
+            height: 10,
+          ),
+          Subtitle(
+            text: "New Transaction",
+          ),
           SizedBox(
             height: 10,
           ),
