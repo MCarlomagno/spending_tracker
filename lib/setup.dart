@@ -5,6 +5,6 @@ import 'package:spending_tracker/services/transactions_service.dart';
 final getIt = GetIt.instance;
 
 void setupServices() {
-  getIt.registerLazySingleton<DataBase>(() => DataBase());
+  getIt.registerLazySingleton<DatabaseProvider>(() => DatabaseProvider());
   getIt.registerLazySingleton<TransactionsService>(() => TransactionsService());
 }

@@ -6,7 +6,7 @@ import '../setup.dart';
 
 class TransactionsRepository {
   create(Payment payment) async {
-    final DataBase dbProvider = getIt.get<DataBase>();
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.insert("Payments", payment.toMap());
     print(res.toString());
