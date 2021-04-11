@@ -12,4 +12,11 @@ class Payment {
         "date": this.date.toIso8601String(),
         "detail": this.detail,
       };
+
+  factory Payment.fromMap(Map<String, dynamic> json) => new Payment(
+        id: json["id"],
+        amount: json["amount"],
+        date: DateTime.parse(json["date"]),
+        detail: json["detail"],
+      );
 }
