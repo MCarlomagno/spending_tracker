@@ -10,11 +10,21 @@ class TransactionsTable extends StatefulWidget {
 
 class _TransactionsTableState extends State<TransactionsTable> {
   @override
+  void initState() {
+    _loadPayments();
+    super.initState();
+  }
+
+  _loadPayments() async {
+    await Provider.of<PaymentModel>(context, listen: false).loadAll();
+  }
+
+  @override
   Widget build(BuildContext context) {
     var tableHeight = MediaQuery.of(context).size.height * 0.4;
     var tableWidth = MediaQuery.of(context).size.width * 0.9;
-    return Consumer<PaymentModel>(builder: (context, transactionModel, child) {
-      List<Payment> transactions = transactionModel.transactions;
+    return Consumer<PaymentModel>(builder: (context, paymentsModel, child) {
+      List<Payment> transactions = paymentsModel.payments;
 
       return Container(
         height: tableHeight,
