@@ -15,7 +15,8 @@ class TransactionsRepository {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.query("Payments");
-    var allPayments = res?.map((e) => Payment.fromMap(e)).toList();
+    var allPayments =
+        res?.map((e) => Payment.fromMap(e)).toList().reversed.toList();
     return allPayments ?? [];
   }
 }
