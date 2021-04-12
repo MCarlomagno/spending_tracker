@@ -11,10 +11,12 @@ class TransactionsRepository {
     return res;
   }
 
-  getAll() async {
+  Future<List<Payment>> getAll() async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.query("Payments");
-    return res?.map((e) => Payment.fromMap(e));
+    var allPayments =
+        res?.map((e) => Payment.fromMap(e)).toList().reversed.toList();
+    return allPayments ?? [];
   }
 }

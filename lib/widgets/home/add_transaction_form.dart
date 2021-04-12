@@ -14,7 +14,7 @@ class AddTransactionForm extends StatefulWidget {
 }
 
 class _AddTransactionFormState extends State<AddTransactionForm> {
-  final _transactionsService = getIt.get<TransactionsService>();
+  final _paymentsService = getIt.get<PaymentsService>();
 
   final TextEditingController _amountController = new TextEditingController();
   final TextEditingController _detailController = new TextEditingController();
@@ -71,15 +71,15 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     }
   }
 
-  _createTransaction() async {
+  Future<void> _createTransaction() async {
     var amount = double.parse(this._amountController.text);
     var detail = this._detailController.text;
     var date = DateTime.now();
 
     var payment = new Payment(amount: amount, date: date, detail: detail);
-    await _transactionsService.create(payment: payment);
+    await _paymentsService.create(payment: payment);
 
-    Provider.of<PaymentModel>(context, listen: false).add(payment);
+    await Provider.of<PaymentModel>(context, listen: false).loadAll();
   }
 
   _setLoading(bool loading) {
