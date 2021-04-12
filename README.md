@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://raw.githubusercontent.com/MCarlomagno/spending_tracker/master/assets/readme_banner.png" alt="Screenshot 1" width="300"/>
+<img src="https://raw.githubusercontent.com/MCarlomagno/spending_tracker/master/assets/readme_banner.png" alt="Screenshot 1" width="100%"/>
 </div>
 
 # Spending tracker 📈 ⚖️
