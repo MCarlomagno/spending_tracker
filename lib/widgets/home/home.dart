@@ -87,15 +87,35 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           padding: EdgeInsets.all(20),
           child: Align(
             alignment: Alignment.topRight,
-            child: IconButton(
-              onPressed: () {},
+            child: PopupMenuButton<int>(
               icon: Icon(
                 Icons.more_vert,
                 color: Colors.black,
               ),
+              onSelected: (int result) {
+                Provider.of<PaymentModel>(context, listen: false).deleteAll();
+              },
+              itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
+                PopupMenuItem<int>(
+                  value: 0,
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: <Widget>[
+                      Icon(
+                        Icons.delete,
+                        color: Colors.red,
+                      ),
+                      Text(
+                        'Delete all',
+                        style: TextStyle(color: Colors.red),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
-        )
+        ),
       ],
       title: Container(
         padding: EdgeInsets.fromLTRB(20, 20, 0, 0),

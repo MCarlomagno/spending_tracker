@@ -12,4 +12,8 @@ class PaymentsService {
     List<Payment> allPayments = await transactionsRepository.getAll();
     return allPayments;
   }
+
+  Future<void> deleteAll() async {
+    await transactionsRepository.deleteAll();
+  }
 }
