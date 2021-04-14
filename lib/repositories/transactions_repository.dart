@@ -4,7 +4,7 @@ import 'package:sqflite/sqflite.dart';
 import '../setup.dart';
 
 class TransactionsRepository {
-  create(Payment payment) async {
+  Future<int?> create(Payment payment) async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.insert("Payments", payment.toMap());
@@ -18,5 +18,12 @@ class TransactionsRepository {
     var allPayments =
         res?.map((e) => Payment.fromMap(e)).toList().reversed.toList();
     return allPayments ?? [];
+  }
+
+  Future<int?> deleteAll() async {
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
+    Database? db = await dbProvider.database;
+    var res = await db?.delete("Payments");
+    return res;
   }
 }

@@ -32,4 +32,12 @@ class PaymentModel extends ChangeNotifier {
     setLoadingPayments(false);
     notifyListeners();
   }
+
+  Future<void> deleteAll() async {
+    setLoadingPayments(true);
+    await this._paymentsService.deleteAll();
+    await this.loadAll();
+    setLoadingPayments(false);
+    notifyListeners();
+  }
 }
