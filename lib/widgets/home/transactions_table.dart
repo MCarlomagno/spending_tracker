@@ -61,8 +61,11 @@ class _TransactionsTableState extends State<TransactionsTable> {
                       Text(payment.detail ?? "no detail"),
                     ),
                     DataCell(
-                      Text(
-                        this._amountFormatString(payment.amount),
+                      Container(
+                        width: tableWidth * 0.4, //SET width
+                        child: Text(
+                          this._amountFormatString(payment.amount),
+                        ),
                       ),
                     ),
                   ],
@@ -78,6 +81,6 @@ class _TransactionsTableState extends State<TransactionsTable> {
   }
 
   _amountFormatString(double amount) {
-    return "\$ " + amount.toStringAsFixed(2);
+    return "\$ " + amount.toStringAsFixed(0);
   }
 }
