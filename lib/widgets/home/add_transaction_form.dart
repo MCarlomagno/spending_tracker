@@ -26,8 +26,10 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 30),
       child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisSize: MainAxisSize.min,
         children: [
-          SizedBox(height: 10),
+          SizedBox(height: 30),
           Subtitle(
             text: "New Transaction",
           ),
@@ -36,6 +38,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             labelText: "Amount",
             keyboardType: TextInputType.number,
             controller: _amountController,
+            autofocus: true,
           ),
           SizedBox(height: 10),
           AppTextField(
@@ -43,19 +46,24 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             controller: _detailController,
           ),
           SizedBox(height: 10),
-          MaterialButton(
-            height: 50,
-            minWidth: MediaQuery.of(context).size.width - 60,
-            color: Color(0xFF5BC8AA),
-            disabledColor: Colors.grey[400],
-            onPressed: !loading ? _onConfirmPressed : null,
-            child: !loading
-                ? Text(
-                    "Confirm",
-                    style: TextStyle(color: Colors.white),
-                  )
-                : ButtonProgress(),
+          Padding(
+            padding: EdgeInsets.only(
+                bottom: MediaQuery.of(context).viewInsets.bottom),
+            child: MaterialButton(
+              height: 50,
+              minWidth: MediaQuery.of(context).size.width - 60,
+              color: Color(0xFF5BC8AA),
+              disabledColor: Colors.grey[400],
+              onPressed: !loading ? _onConfirmPressed : null,
+              child: !loading
+                  ? Text(
+                      "Confirm",
+                      style: TextStyle(color: Colors.white),
+                    )
+                  : ButtonProgress(),
+            ),
           ),
+          SizedBox(height: 30),
         ],
       ),
     );
