@@ -22,27 +22,30 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: HomeAppBar(),
       body: SizedBox.expand(
         child: Container(
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              Subtitle(text: "Balance"),
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              BalanceBanner(),
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              Subtitle(text: "Transactions"),
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              TransactionsTable(),
-            ],
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                Subtitle(text: "Balance"),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                BalanceBanner(),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                Subtitle(text: "Transactions"),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                TransactionsTable(),
+              ],
+            ),
           ),
         ),
       ),
@@ -79,8 +82,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     var headerHeight = this.preferredSize.height;
     var contentWidth = MediaQuery.of(context).size.width * 0.8;
     return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
+      backgroundColor: Colors.white,
+      elevation: 3,
       toolbarHeight: headerHeight,
       actions: [
         Padding(
@@ -125,7 +128,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           "Welcome back,\nMarcos",
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: 30,
+            fontSize: 25,
             color: Colors.black,
           ),
         ),
