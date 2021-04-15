@@ -23,7 +23,6 @@ class PaymentModel extends ChangeNotifier {
 
   setLoadingPayments(bool loading) {
     _loadingPayments = loading;
-    notifyListeners();
   }
 
   Future<void> loadAll() async {

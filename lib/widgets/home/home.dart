@@ -22,27 +22,30 @@ class _MyHomePageState extends State<MyHomePage> {
       appBar: HomeAppBar(),
       body: SizedBox.expand(
         child: Container(
-          alignment: Alignment.center,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              Subtitle(text: "Balance"),
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              BalanceBanner(),
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              Subtitle(text: "Transactions"),
-              SizedBox(
-                height: contentMarginVertical,
-              ),
-              TransactionsTable(),
-            ],
+          alignment: Alignment.topCenter,
+          child: SingleChildScrollView(
+            padding: EdgeInsets.zero,
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                Subtitle(text: "Balance"),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                BalanceBanner(),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                Subtitle(text: "Transactions"),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                TransactionsTable(),
+              ],
+            ),
           ),
         ),
       ),

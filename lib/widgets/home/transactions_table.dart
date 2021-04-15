@@ -11,12 +11,12 @@ class TransactionsTable extends StatefulWidget {
 class _TransactionsTableState extends State<TransactionsTable> {
   @override
   void initState() {
-    _loadPayments();
     super.initState();
+    _loadPayments();
   }
 
   _loadPayments() async {
-    await Provider.of<PaymentModel>(context, listen: false).loadAll();
+    Provider.of<PaymentModel>(context, listen: false).loadAll();
   }
 
   @override
