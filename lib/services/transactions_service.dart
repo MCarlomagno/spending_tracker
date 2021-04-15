@@ -16,4 +16,12 @@ class PaymentsService {
   Future<void> deleteAll() async {
     await transactionsRepository.deleteAll();
   }
+
+  Future<void> patchById(int id, {String? detail}) async {
+    Payment? payment = await transactionsRepository.getById(id);
+    if (payment != null) {
+      payment.detail = detail;
+      await transactionsRepository.updateById(id, payment);
+    }
+  }
 }

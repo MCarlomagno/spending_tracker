@@ -26,4 +26,18 @@ class TransactionsRepository {
     var res = await db?.delete("Payments");
     return res;
   }
+
+  Future<Payment?> getById(int id) async {
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
+    Database? db = await dbProvider.database;
+    var res = await db?.query("Payments", where: '$id = ?', whereArgs: [id]);
+    return Payment.fromMap(res![0]);
+  }
+
+  Future<void> updateById(int id, Payment payment) async {
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
+    Database? db = await dbProvider.database;
+    await db?.update("Payments", payment.toMap(),
+        where: '$id = ?', whereArgs: [id]);
+  }
 }
