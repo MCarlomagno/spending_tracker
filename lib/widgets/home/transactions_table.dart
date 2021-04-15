@@ -2,6 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/payment.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/services/transactions_service.dart';
+
+import '../../setup.dart';
 
 class TransactionsTable extends StatefulWidget {
   @override
@@ -9,6 +12,8 @@ class TransactionsTable extends StatefulWidget {
 }
 
 class _TransactionsTableState extends State<TransactionsTable> {
+  final _paymentsService = getIt.get<PaymentsService>();
+
   @override
   void initState() {
     super.initState();
@@ -58,7 +63,15 @@ class _TransactionsTableState extends State<TransactionsTable> {
                       ),
                     ),
                     DataCell(
-                      Text(payment.detail ?? "no detail"),
+                      TextFormField(
+                        controller: TextEditingController(
+                            text: payment.detail ?? "no detail"),
+                        onFieldSubmitted: (val) async {
+                          await _paymentsService.patchById(payment.id ?? 0,
+                              detail: val);
+                          await paymentsModel.loadAll();
+                        },
+                      ),
                     ),
                     DataCell(
                       Container(
