@@ -82,8 +82,8 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
     var headerHeight = this.preferredSize.height;
     var contentWidth = MediaQuery.of(context).size.width * 0.8;
     return AppBar(
-      backgroundColor: Colors.transparent,
-      elevation: 0,
+      backgroundColor: Colors.white,
+      elevation: 3,
       toolbarHeight: headerHeight,
       actions: [
         Padding(
@@ -128,7 +128,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
           "Welcome back,\nMarcos",
           style: TextStyle(
             fontFamily: 'Poppins',
-            fontSize: 30,
+            fontSize: 25,
             color: Colors.black,
           ),
         ),

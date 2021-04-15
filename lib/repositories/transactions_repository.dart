@@ -37,7 +37,7 @@ class TransactionsRepository {
   Future<void> updateById(int id, Payment payment) async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
-    var res = await db?.update("Payments", payment.toMap(),
+    await db?.update("Payments", payment.toMap(),
         where: '$id = ?', whereArgs: [id]);
   }
 }
