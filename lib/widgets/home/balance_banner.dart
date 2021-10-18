@@ -18,16 +18,12 @@ class BalanceBanner extends StatelessWidget {
           gradient: LinearGradient(
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
-            colors: <Color>[Color(0xFFEC3E7C), Color(0xFFF65050)],
+            colors: <Color>[Color(0xFF5644A0), Color(0xFF2F8A7F), Color(0xFF14D928)],
           ),
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              "Spent",
-              style: TextStyle(color: Colors.white),
-            ),
             Text(
               r'$' + '${paymentsModel.balance}',
               style: TextStyle(color: Colors.white, fontSize: 50),
