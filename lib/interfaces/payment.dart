@@ -19,4 +19,6 @@ class Payment {
         date: DateTime.parse(json["date"]),
         detail: json["detail"],
       );
+
+  String toString() => '(amount = ${this.amount}, date=${this.date}, detail=${this.detail})';
 }
