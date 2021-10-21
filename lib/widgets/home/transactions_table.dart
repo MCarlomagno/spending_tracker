@@ -27,7 +27,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
   @override
   Widget build(BuildContext context) {
     var tableHeight = MediaQuery.of(context).size.height * 0.4;
-    var tableWidth = MediaQuery.of(context).size.width * 0.9;
+    var tableWidth = MediaQuery.of(context).size.width;
     return Consumer<PaymentModel>(builder: (context, paymentsModel, child) {
       List<Payment> transactions = paymentsModel.payments;
 
@@ -36,57 +36,53 @@ class _TransactionsTableState extends State<TransactionsTable> {
         width: tableWidth,
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
-          child: SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: DataTable(
-                columns: [
-                  DataColumn(
-                      label: Text(
-                    "Date",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                  DataColumn(
-                      label: Text(
-                    "Detail",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                  DataColumn(
-                      label: Text(
-                    "Amount",
-                    style: TextStyle(fontWeight: FontWeight.bold),
-                  )),
-                ],
-                rows: transactions.map<DataRow>((Payment payment) {
-                  return DataRow(
-                    cells: <DataCell>[
-                      DataCell(
-                        Text(
-                          this._dateTimeFormatString(payment.date),
+          child: DataTable(
+              columns: [
+                DataColumn(
+                    label: Text(
+                  "Date",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+                DataColumn(
+                    label: Text(
+                  "Detail",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+                DataColumn(
+                    label: Text(
+                  "Amount",
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                )),
+              ],
+              rows: transactions.map<DataRow>((Payment payment) {
+                return DataRow(
+                  cells: <DataCell>[
+                    DataCell(
+                      Text(
+                        this._dateTimeFormatString(payment.date),
+                      ),
+                    ),
+                    DataCell(
+                      TextFormField(
+                        controller: TextEditingController(
+                            text: payment.detail ?? "no detail"),
+                        onFieldSubmitted: (val) async {
+                          await _paymentsService.patchById(payment.id ?? 0,
+                              detail: val);
+                          await paymentsModel.loadAll();
+                        },
+                      ),
+                    ),
+                    DataCell(
+                      Container(
+                        child: Text(
+                          this._amountFormatString(payment.amount),
                         ),
                       ),
-                      DataCell(
-                        TextFormField(
-                          controller: TextEditingController(
-                              text: payment.detail ?? "no detail"),
-                          onFieldSubmitted: (val) async {
-                            await _paymentsService.patchById(payment.id ?? 0,
-                                detail: val);
-                            await paymentsModel.loadAll();
-                          },
-                        ),
-                      ),
-                      DataCell(
-                        Container(
-                          width: tableWidth * 0.4, //SET width
-                          child: Text(
-                            this._amountFormatString(payment.amount),
-                          ),
-                        ),
-                      ),
-                    ],
-                  );
-                }).toList()),
-          ),
+                    ),
+                  ],
+                );
+              }).toList()),
         ),
       );
     });
