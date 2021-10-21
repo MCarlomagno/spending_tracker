@@ -31,15 +31,24 @@ class _MyHomePageState extends State<MyHomePage> {
                 SizedBox(
                   height: contentMarginVertical,
                 ),
-                Subtitle(text: "Balance"),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Subtitle(text: "Balance"),
+                ),
                 SizedBox(
                   height: contentMarginVertical,
                 ),
-                BalanceBanner(),
+                Align(
+                  alignment: Alignment.center,
+                  child: BalanceBanner(),
+                ),
                 SizedBox(
                   height: contentMarginVertical,
                 ),
-                Subtitle(text: "Transactions"),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Subtitle(text: "Transactions"),
+                ),
                 SizedBox(
                   height: contentMarginVertical,
                 ),
