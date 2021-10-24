@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/widgets/settings/settings.dart';
 
 class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
   @override
@@ -27,11 +28,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               onSelected: (int result) {
                 switch (result) {
                   case 0:
-                    print('to settings');
+                     Navigator.of(context)
+                      .push(MaterialPageRoute(builder: (context) => SettingsPage()));
                     break;
                   case 1:
                     Provider.of<PaymentModel>(context, listen: false)
-                        .deleteAll();
+                      .deleteAll();
                     break;
                 }
               },
