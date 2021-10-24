@@ -5,6 +5,7 @@ import 'package:spending_tracker/widgets/home/transactions_table.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
 import 'add_transaction_form.dart';
+import 'app_bar.dart';
 import 'balance_banner.dart';
 
 class MyHomePage extends StatefulWidget {
@@ -77,70 +78,6 @@ class _MyHomePageState extends State<MyHomePage> {
         },
         backgroundColor: Color(0xFF5BC8AA),
         child: Icon(Icons.add),
-      ),
-    );
-  }
-}
-
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
-  @override
-  Size get preferredSize => Size.fromHeight(120);
-
-  @override
-  Widget build(BuildContext context) {
-    var headerHeight = this.preferredSize.height;
-    var contentWidth = MediaQuery.of(context).size.width * 0.8;
-    return AppBar(
-      backgroundColor: Colors.white,
-      elevation: 3,
-      toolbarHeight: headerHeight,
-      actions: [
-        Padding(
-          padding: EdgeInsets.all(20),
-          child: Align(
-            alignment: Alignment.topRight,
-            child: PopupMenuButton<int>(
-              icon: Icon(
-                Icons.more_vert,
-                color: Colors.black,
-              ),
-              onSelected: (int result) {
-                Provider.of<PaymentModel>(context, listen: false).deleteAll();
-              },
-              itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
-                PopupMenuItem<int>(
-                  value: 0,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: <Widget>[
-                      Icon(
-                        Icons.delete,
-                        color: Colors.red,
-                      ),
-                      Text(
-                        'Delete all',
-                        style: TextStyle(color: Colors.red),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ],
-      title: Container(
-        padding: EdgeInsets.fromLTRB(20, 20, 0, 0),
-        width: contentWidth,
-        height: headerHeight,
-        child: Text(
-          "Welcome back,\nMarcos",
-          style: TextStyle(
-            fontFamily: 'Poppins',
-            fontSize: 25,
-            color: Colors.black,
-          ),
-        ),
       ),
     );
   }
