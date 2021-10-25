@@ -15,7 +15,7 @@ class UsersRepository {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.query("Users");
-    return User.fromMap(res![0]);
+    return res!.length > 0 ? User.fromMap(res[0]) : null;
   }
 
   Future<void> updateById(int id, User user) async {

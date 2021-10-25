@@ -1,16 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/interfaces/user.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/services/users_service.dart';
 import 'package:spending_tracker/widgets/settings/settings.dart';
 
-class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
+import '../../setup.dart';
+
+class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
+  const HomeAppBar({Key? key}) : super(key: key);
+
   @override
   Size get preferredSize => Size.fromHeight(120);
 
   @override
+  _HomeAppBarState createState() => _HomeAppBarState();
+}
+
+class _HomeAppBarState extends State<HomeAppBar> {
+  User? user;
+  bool isLoading = false;
+  String title = "Welcome back";
+
+  final _usersService = getIt.get<UsersService>();
+
+  Future<User?> loadUser() async {
+    setState(() => isLoading = true);
+    user = await _usersService.getSingle();
+    setState(() => isLoading = false);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    loadUser();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    var headerHeight = this.preferredSize.height;
+    var headerHeight = widget.preferredSize.height;
     var contentWidth = MediaQuery.of(context).size.width * 0.8;
+
+    if(user?.name != null) {
+      title = "Welcome back,\n${user?.name}";
+    } 
+
     return AppBar(
       backgroundColor: Colors.white,
       elevation: 3,
@@ -28,12 +62,12 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
               onSelected: (int result) {
                 switch (result) {
                   case 0:
-                     Navigator.of(context)
-                      .push(MaterialPageRoute(builder: (context) => SettingsPage()));
+                    Navigator.of(context).push(MaterialPageRoute(
+                        builder: (context) => SettingsPage()));
                     break;
                   case 1:
                     Provider.of<PaymentModel>(context, listen: false)
-                      .deleteAll();
+                        .deleteAll();
                     break;
                 }
               },
@@ -80,7 +114,7 @@ class HomeAppBar extends StatelessWidget implements PreferredSizeWidget {
         width: contentWidth,
         height: headerHeight,
         child: Text(
-          "Welcome back,\nMarcos",
+          title,
           style: TextStyle(
             fontFamily: 'Poppins',
             fontSize: 25,
