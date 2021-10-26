@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
 import 'models/transactions_model.dart';
@@ -15,8 +16,15 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Spending tracker',
       theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
-      home: ChangeNotifierProvider(
-        create: (context) => PaymentModel(),
+      home: MultiProvider(
+        providers: [
+          ChangeNotifierProvider<PaymentModel>(
+            create: (context) => PaymentModel(),
+          ),
+          ChangeNotifierProvider<UsersModel>(
+            create: (context) => UsersModel(),
+          ),
+        ],
         child: MyHomePage(),
       ),
     );

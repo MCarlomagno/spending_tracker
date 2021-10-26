@@ -4,8 +4,9 @@ import 'package:spending_tracker/repositories/users_repository.dart';
 class UsersService {
   var usersRepository = new UsersRepository();
 
-  create({required User user}) async {
+  Future<User?> create({required User user}) async {
     await usersRepository.create(user);
+    return await usersRepository.getSingle();
   }
 
   Future<User?> getSingle() async {
@@ -19,5 +20,9 @@ class UsersService {
       user.name = name;
       await usersRepository.updateById(id, user);
     }
+  }
+
+  Future<void> deleteAll() async {
+    await usersRepository.deleteAll();
   }
 }
