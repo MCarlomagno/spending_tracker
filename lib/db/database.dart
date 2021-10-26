@@ -22,8 +22,8 @@ class DatabaseProvider {
       path,
       version: 1,
       onCreate: (Database db, int version) async {
-        await db.execute(
-            'CREATE TABLE Payments (id INTEGER PRIMARY KEY, detail TEXT, date DATE, amount REAL)');
+        await db.execute('CREATE TABLE Payments (id INTEGER PRIMARY KEY, detail TEXT, date DATE, amount REAL)');
+        await db.execute('CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT)');
       },
     );
 
