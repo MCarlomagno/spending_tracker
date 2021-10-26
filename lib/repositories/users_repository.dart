@@ -24,4 +24,12 @@ class UsersRepository {
     await db?.update("Users", user.toMap(),
         where: 'id = ?', whereArgs: [id]);
   }
+
+  Future<int?> deleteAll() async {
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
+    Database? db = await dbProvider.database;
+    var res = await db?.delete("Users");
+    return res;
+  }
+
 }
