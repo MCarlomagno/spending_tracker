@@ -15,7 +15,16 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Spending tracker',
-      theme: ThemeData(primarySwatch: Colors.blue, fontFamily: 'Poppins'),
+      theme: ThemeData(
+          bottomSheetTheme: BottomSheetThemeData(
+            shape: RoundedRectangleBorder(
+                borderRadius:
+                    BorderRadius.vertical(top: Radius.circular(25.0))),
+          ),
+          errorColor: Colors.red,
+          backgroundColor: Colors.white,
+          primarySwatch: Colors.blue,
+          fontFamily: 'Poppins'),
       home: MultiProvider(
         providers: [
           ChangeNotifierProvider<PaymentModel>(
