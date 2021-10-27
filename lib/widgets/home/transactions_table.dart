@@ -37,6 +37,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: DataTable(
+              showCheckboxColumn: false,
               columns: [
                 DataColumn(
                     label: Text(
@@ -56,6 +57,8 @@ class _TransactionsTableState extends State<TransactionsTable> {
               ],
               rows: transactions.map<DataRow>((Payment payment) {
                 return DataRow(
+                  onSelectChanged: (val) {
+                  },
                   cells: <DataCell>[
                     DataCell(
                       Text(
