@@ -64,9 +64,6 @@ class _MyHomePageState extends State<MyHomePage> {
           final paymentModel =
               Provider.of<PaymentModel>(context, listen: false);
           showModalBottomSheet(
-              shape: RoundedRectangleBorder(
-                  borderRadius:
-                      BorderRadius.vertical(top: Radius.circular(25.0))),
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {

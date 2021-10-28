@@ -27,6 +27,13 @@ class TransactionsRepository {
     return res;
   }
 
+  Future<int?> deleteById(int id) async {
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
+    Database? db = await dbProvider.database;
+    var res = await db?.delete("Payments", where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
+
   Future<Payment?> getById(int id) async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
