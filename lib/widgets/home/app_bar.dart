@@ -39,7 +39,7 @@ class _HomeAppBarState extends State<HomeAppBar> {
 
     return Consumer<UsersModel>(builder: (context, usersModel, child) {
 
-      if (usersModel.user?.name != null) {
+      if (usersModel.user?.name != null && usersModel.user?.name != '') {
         title = "Welcome back,\n${usersModel.user?.name}";
       } else {
         title = "Welcome back";

@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/payment.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
+import 'package:spending_tracker/widgets/home/payment_detail.dart';
 
 import '../../setup.dart';
 
@@ -37,6 +38,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
         child: SingleChildScrollView(
           scrollDirection: Axis.vertical,
           child: DataTable(
+              showCheckboxColumn: false,
               columns: [
                 DataColumn(
                     label: Text(
@@ -56,6 +58,19 @@ class _TransactionsTableState extends State<TransactionsTable> {
               ],
               rows: transactions.map<DataRow>((Payment payment) {
                 return DataRow(
+                  onSelectChanged: (val) {
+                    final paymentModel =
+                        Provider.of<PaymentModel>(context, listen: false);
+                    showModalBottomSheet(
+                        backgroundColor: Theme.of(context).backgroundColor,
+                        context: context,
+                        builder: (BuildContext context) {
+                          return ListenableProvider.value(
+                            value: paymentModel,
+                            child: PaymentDetail(payment: payment),
+                          );
+                        });
+                  },
                   cells: <DataCell>[
                     DataCell(
                       Text(
