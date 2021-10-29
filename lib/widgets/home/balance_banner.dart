@@ -24,9 +24,14 @@ class BalanceBanner extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
-            Text(
-              r'$' + '${paymentsModel.balance}',
-              style: TextStyle(color: Colors.white, fontSize: 50),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                r'$' + '${paymentsModel.balance}',
+                style: TextStyle(color: Colors.white, fontSize: 50),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+              ),
             ),
           ],
         ),
