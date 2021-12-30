@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/models/buckets_model.dart';
 import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
@@ -32,6 +33,9 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<UsersModel>(
             create: (context) => UsersModel(),
+          ),
+          ChangeNotifierProvider<BucketsModel>(
+            create: (context) => BucketsModel(),
           ),
         ],
         child: MyHomePage(),

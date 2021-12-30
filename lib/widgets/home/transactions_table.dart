@@ -3,8 +3,8 @@ import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/payment.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
+import 'package:spending_tracker/utils/utils.dart';
 import 'package:spending_tracker/widgets/home/payment_detail.dart';
-
 import '../../setup.dart';
 
 class TransactionsTable extends StatefulWidget {
@@ -91,7 +91,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
                     DataCell(
                       Container(
                         child: Text(
-                          this._amountFormatString(payment.amount),
+                          Utils.amountFormatString(payment.amount),
                         ),
                       ),
                     ),
@@ -105,9 +105,5 @@ class _TransactionsTableState extends State<TransactionsTable> {
 
   _dateTimeFormatString(DateTime date) {
     return "${date.day}/${date.month}/${date.year}";
-  }
-
-  _amountFormatString(double amount) {
-    return "\$ " + amount.toStringAsFixed(0);
   }
 }
