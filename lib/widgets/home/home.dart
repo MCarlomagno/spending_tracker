@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/widgets/home/buckets_list.dart';
 import 'package:spending_tracker/widgets/home/transactions_table.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
@@ -42,6 +43,20 @@ class _MyHomePageState extends State<MyHomePage> {
                 Align(
                   alignment: Alignment.center,
                   child: BalanceBanner(),
+                ),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 20),
+                  child: Subtitle(text: "Buckets"),
+                ),
+                SizedBox(
+                  height: contentMarginVertical,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: BucketsList(),
                 ),
                 SizedBox(
                   height: contentMarginVertical,
