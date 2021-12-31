@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 
 class BalanceBanner extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var bannerWidth = MediaQuery.of(context).size.width * 0.9;
     const bannerHeight = 150.0;
-    return Consumer<PaymentModel>(builder: (context, paymentsModel, child) {
+    return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
       return Container(
         width: bannerWidth,
         height: bannerHeight,
@@ -27,7 +27,7 @@ class BalanceBanner extends StatelessWidget {
             FittedBox(
               fit: BoxFit.fitWidth,
               child: Text(
-                r'$' + '${paymentsModel.balance}',
+                r'$' + '${balanceModel.balance}',
                 style: TextStyle(color: Colors.white, fontSize: 50),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,

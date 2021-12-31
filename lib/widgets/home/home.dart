@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/widgets/home/buckets/buckets_list.dart';
 import 'package:spending_tracker/widgets/home/transactions_table.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
@@ -74,22 +74,36 @@ class _MyHomePageState extends State<MyHomePage> {
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton(
+      floatingActionButton: FloatingActionButton.extended(
+        label: Text.rich(
+          TextSpan(
+            children: [
+              WidgetSpan(
+                child: Padding(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Icon(
+                    Icons.add,
+                  ),
+                ),
+              ),
+              TextSpan(text: 'NEW TRANSACTION'),
+            ],
+          ),
+        ),
         onPressed: () {
-          final paymentModel =
-              Provider.of<PaymentModel>(context, listen: false);
+          final balanceModel =
+              Provider.of<BalanceModel>(context, listen: false);
           showModalBottomSheet(
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {
                 return ListenableProvider.value(
-                  value: paymentModel,
+                  value: balanceModel,
                   child: AddTransactionForm(),
                 );
               });
         },
         backgroundColor: Color(0xFF5BC8AA),
-        child: Icon(Icons.add),
       ),
     );
   }

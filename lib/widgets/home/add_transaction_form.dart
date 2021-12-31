@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/payment.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
@@ -87,7 +87,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     var payment = new Payment(amount: amount, date: date, detail: detail);
     await _paymentsService.create(payment: payment);
 
-    await Provider.of<PaymentModel>(context, listen: false).loadAll();
+    await Provider.of<BalanceModel>(context, listen: false).loadAllPayments();
   }
 
   _setLoading(bool loading) {

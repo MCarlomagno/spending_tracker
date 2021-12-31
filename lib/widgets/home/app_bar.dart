@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/user.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/widgets/settings/settings.dart';
 
@@ -67,8 +67,8 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       Provider.of<UsersModel>(context, listen: false).refreshUser();
                       break;
                     case 1:
-                      Provider.of<PaymentModel>(context, listen: false)
-                          .deleteAll();
+                      Provider.of<BalanceModel>(context, listen: false)
+                          .deleteAllPayments();
                       break;
                   }
                 },

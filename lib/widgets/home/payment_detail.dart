@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/payment.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
 class PaymentDetail extends StatelessWidget {
@@ -14,7 +14,7 @@ class PaymentDetail extends StatelessWidget {
     String detail = payment.detail.toString();
     String amount = payment.amount.toStringAsFixed(2);
 
-    if(detail.length == 0) {
+    if (detail.length == 0) {
       detail = 'No detail provided';
     }
 
@@ -30,18 +30,25 @@ class PaymentDetail extends StatelessWidget {
             text: "Transaction detail",
           ),
           SizedBox(height: 10),
-          Text(detail, style: TextStyle(color: Colors.grey[600]),),
+          Text(
+            detail,
+            style: TextStyle(color: Colors.grey[600]),
+          ),
           SizedBox(height: 10),
           RichText(
             text: TextSpan(
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
-                TextSpan(text: r'$', style: TextStyle(color: Colors.grey[600], fontSize: 20)),
-                TextSpan(text: amount, style: TextStyle(fontWeight: FontWeight.w500, fontSize: 40)),
+                TextSpan(
+                    text: r'$',
+                    style: TextStyle(color: Colors.grey[600], fontSize: 20)),
+                TextSpan(
+                    text: amount,
+                    style:
+                        TextStyle(fontWeight: FontWeight.w500, fontSize: 40)),
               ],
             ),
           ),
-          
           SizedBox(height: 20),
           SizedBox(
             width: width,
@@ -52,7 +59,8 @@ class PaymentDetail extends StatelessWidget {
                     Theme.of(context).errorColor),
               ),
               onPressed: () async {
-                await Provider.of<PaymentModel>(context, listen: false).deleteById(payment.id!);
+                await Provider.of<BalanceModel>(context, listen: false)
+                    .deletePaymentById(payment.id!);
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.delete),
