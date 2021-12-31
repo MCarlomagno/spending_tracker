@@ -22,7 +22,7 @@ class BalanceModel extends ChangeNotifier {
   UnmodifiableListView<Payment> get payments => UnmodifiableListView(_payments);
   bool get loadingPayments => _loadingPayments;
 
-  double get balance => bucketsAmount - paymentsAmount;
+  double get balance => bucketsAmount + paymentsAmount;
 
   double get paymentsAmount => _payments.fold(0.0, (value, element) => value + element.amount);
   double get bucketsAmount => _buckets.fold(0.0, (value, element) => value + element.amount);
