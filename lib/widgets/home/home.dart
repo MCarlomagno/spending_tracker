@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/transactions_model.dart';
-import 'package:spending_tracker/widgets/home/buckets_list.dart';
+import 'package:spending_tracker/widgets/home/buckets/buckets_list.dart';
 import 'package:spending_tracker/widgets/home/transactions_table.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 

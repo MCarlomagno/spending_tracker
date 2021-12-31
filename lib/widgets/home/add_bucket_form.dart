@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
 import 'package:spending_tracker/models/buckets_model.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
-import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
 import 'package:spending_tracker/widgets/shared/button_progress.dart';

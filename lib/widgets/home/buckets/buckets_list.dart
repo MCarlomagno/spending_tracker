@@ -3,11 +3,9 @@ import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/models/buckets_model.dart';
-import 'package:spending_tracker/services/bukets_service.dart';
-import 'package:spending_tracker/utils/utils.dart';
 import 'package:spending_tracker/widgets/home/add_bucket_form.dart';
-
-import '../../setup.dart';
+import 'package:spending_tracker/widgets/home/buckets/add_bucket_button.dart';
+import 'package:spending_tracker/widgets/home/buckets/bucket_item.dart';
 
 class BucketsList extends StatefulWidget {
   const BucketsList({Key? key}) : super(key: key);
@@ -17,8 +15,6 @@ class BucketsList extends StatefulWidget {
 }
 
 class _BucketsListState extends State<BucketsList> {
-  final _bucketsService = getIt.get<BucketsService>();
-
   @override
   void initState() {
     super.initState();
@@ -45,7 +41,6 @@ class _BucketsListState extends State<BucketsList> {
   @override
   Widget build(BuildContext context) {
     var width = MediaQuery.of(context).size.width * 0.9;
-    var itemWidth = MediaQuery.of(context).size.width / 4;
     var height = 150.0;
 
     return Consumer<BucketsModel>(builder: (context, paymentsModel, child) {
@@ -57,23 +52,8 @@ class _BucketsListState extends State<BucketsList> {
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
-            IconButton(
-              icon: Icon(Icons.add_circle_outline_outlined),
-              onPressed: _onCreateBucket,
-              iconSize: 30,
-            ),
-            ...buckets
-                .map((e) => Container(
-                      height: height,
-                      width: itemWidth,
-                      child: Column(
-                        children: [
-                          e.name != null ? Text(e.name!) : Text('Unnamed'),
-                          Text(Utils.amountFormatString(e.amount))
-                        ],
-                      ),
-                    ))
-                .toList()
+            AddBucketButton(onPressed: _onCreateBucket),
+            ...buckets.map((e) => BucketItem(bucket: e)).toList()
           ],
         ),
       );
