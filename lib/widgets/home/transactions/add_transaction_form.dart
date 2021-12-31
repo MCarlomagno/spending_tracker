@@ -8,6 +8,11 @@ import 'package:spending_tracker/widgets/shared/app_text_field.dart';
 import 'package:spending_tracker/widgets/shared/button_progress.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
+enum TransactionType {
+  Income,
+  Expense
+}
+
 class AddTransactionForm extends StatefulWidget {
   @override
   _AddTransactionFormState createState() => _AddTransactionFormState();
@@ -20,6 +25,20 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   final TextEditingController _detailController = new TextEditingController();
 
   bool loading = false;
+
+  List<bool> _selected = [false, true];
+  TransactionType _type = TransactionType.Expense;
+  
+  _onTypeSelected(int index) {
+    _selected = [false, false];
+
+    if(index == 0) _type = TransactionType.Income;
+    else _type = TransactionType.Expense;
+
+    setState(() {
+      _selected[index] = true;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +58,27 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
             keyboardType: TextInputType.number,
             controller: _amountController,
             autofocus: true,
+          ),
+          SizedBox(height: 10),
+          ToggleButtons(
+            children: [
+              Container(
+                child: Text(
+                  'Income',
+                  textAlign: TextAlign.center,
+                ),
+                width: 100,
+              ),
+              Container(
+                child: Text(
+                  'Expense',
+                  textAlign: TextAlign.center,
+                ),
+                width: 100,
+              )
+            ],
+            isSelected: _selected,
+            onPressed: _onTypeSelected,
           ),
           SizedBox(height: 10),
           AppTextField(
@@ -81,6 +121,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
 
   Future<void> _createTransaction() async {
     var amount = double.parse(this._amountController.text);
+    if(_type == TransactionType.Expense) amount = (-amount);
+
     var detail = this._detailController.text;
     var date = DateTime.now();
 

@@ -97,9 +97,13 @@ class _MyHomePageState extends State<MyHomePage> {
               isScrollControlled: true,
               context: context,
               builder: (BuildContext context) {
-                return ListenableProvider.value(
-                  value: balanceModel,
-                  child: AddTransactionForm(),
+                return StatefulBuilder(
+                  builder: (BuildContext context, StateSetter setState) {
+                    return ListenableProvider.value(
+                      value: balanceModel,
+                      child: AddTransactionForm(),
+                    );
+                  },
                 );
               });
         },
