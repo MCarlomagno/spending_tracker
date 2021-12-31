@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
-import 'package:spending_tracker/models/buckets_model.dart';
-import 'package:spending_tracker/widgets/home/add_bucket_form.dart';
+import 'package:spending_tracker/models/balance_model.dart';
+import 'package:spending_tracker/widgets/home/buckets/add_bucket_form.dart';
 import 'package:spending_tracker/widgets/home/buckets/add_bucket_button.dart';
 import 'package:spending_tracker/widgets/home/buckets/bucket_item.dart';
 
@@ -22,17 +22,17 @@ class _BucketsListState extends State<BucketsList> {
   }
 
   _loadBuckets() async {
-    Provider.of<BucketsModel>(context, listen: false).loadAll();
+    Provider.of<BalanceModel>(context, listen: false).loadAllBuckets();
   }
 
   _onCreateBucket() {
-    final bucketsModel = Provider.of<BucketsModel>(context, listen: false);
+    final balanceModel = Provider.of<BalanceModel>(context, listen: false);
     showModalBottomSheet(
         isScrollControlled: true,
         context: context,
         builder: (BuildContext context) {
           return ListenableProvider.value(
-            value: bucketsModel,
+            value: balanceModel,
             child: AddBucketForm(),
           );
         });
@@ -43,7 +43,7 @@ class _BucketsListState extends State<BucketsList> {
     var width = MediaQuery.of(context).size.width * 0.9;
     var height = 150.0;
 
-    return Consumer<BucketsModel>(builder: (context, paymentsModel, child) {
+    return Consumer<BalanceModel>(builder: (context, paymentsModel, child) {
       List<Bucket> buckets = paymentsModel.buckets;
 
       return Container(

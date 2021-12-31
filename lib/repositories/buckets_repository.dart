@@ -20,4 +20,10 @@ class BucketsRepository {
     return allBuckets ?? [];
   }
 
+  Future<int?> deleteById(int id) async {
+    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
+    Database? db = await dbProvider.database;
+    var res = await db?.delete("Bucket", where: 'id = ?', whereArgs: [id]);
+    return res;
+  }
 }

@@ -13,4 +13,8 @@ class BucketsService {
     return allBuckets;
   }
 
+    Future<void> deleteById(int id) async {
+    await bucketsRepository.deleteById(id);
+  }
+
 }

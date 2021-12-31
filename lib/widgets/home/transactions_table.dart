@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/payment.dart';
-import 'package:spending_tracker/models/transactions_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/utils/utils.dart';
 import 'package:spending_tracker/widgets/home/payment_detail.dart';
@@ -22,15 +22,15 @@ class _TransactionsTableState extends State<TransactionsTable> {
   }
 
   _loadPayments() async {
-    Provider.of<PaymentModel>(context, listen: false).loadAll();
+    Provider.of<BalanceModel>(context, listen: false).loadAllPayments();
   }
 
   @override
   Widget build(BuildContext context) {
     var tableHeight = MediaQuery.of(context).size.height * 0.4;
     var tableWidth = MediaQuery.of(context).size.width;
-    return Consumer<PaymentModel>(builder: (context, paymentsModel, child) {
-      List<Payment> transactions = paymentsModel.payments;
+    return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
+      List<Payment> transactions = balanceModel.payments;
 
       return Container(
         height: tableHeight,
@@ -59,14 +59,14 @@ class _TransactionsTableState extends State<TransactionsTable> {
               rows: transactions.map<DataRow>((Payment payment) {
                 return DataRow(
                   onSelectChanged: (val) {
-                    final paymentModel =
-                        Provider.of<PaymentModel>(context, listen: false);
+                    final balanceModel =
+                        Provider.of<BalanceModel>(context, listen: false);
                     showModalBottomSheet(
                         backgroundColor: Theme.of(context).backgroundColor,
                         context: context,
                         builder: (BuildContext context) {
                           return ListenableProvider.value(
-                            value: paymentModel,
+                            value: balanceModel,
                             child: PaymentDetail(payment: payment),
                           );
                         });
@@ -84,7 +84,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
                         onFieldSubmitted: (val) async {
                           await _paymentsService.patchById(payment.id ?? 0,
                               detail: val);
-                          await paymentsModel.loadAll();
+                          await balanceModel.loadAllPayments();
                         },
                       ),
                     ),

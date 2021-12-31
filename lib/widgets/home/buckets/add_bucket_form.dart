@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
-import 'package:spending_tracker/models/buckets_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
@@ -86,7 +86,7 @@ class _AddBucketFormState extends State<AddBucketForm> {
     var bucket = new Bucket(amount: amount, name: name);
     await _bucketsService.create(bucket: bucket);
 
-    await Provider.of<BucketsModel>(context, listen: false).loadAll();
+    await Provider.of<BalanceModel>(context, listen: false).loadAllBuckets();
   }
 
   _setLoading(bool loading) {

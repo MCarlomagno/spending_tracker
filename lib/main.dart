@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/models/buckets_model.dart';
+import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
-import 'models/transactions_model.dart';
 
 void main() {
   setupServices();
@@ -28,14 +27,11 @@ class MyApp extends StatelessWidget {
           fontFamily: 'Poppins'),
       home: MultiProvider(
         providers: [
-          ChangeNotifierProvider<PaymentModel>(
-            create: (context) => PaymentModel(),
+          ChangeNotifierProvider<BalanceModel>(
+            create: (context) => BalanceModel(),
           ),
           ChangeNotifierProvider<UsersModel>(
             create: (context) => UsersModel(),
-          ),
-          ChangeNotifierProvider<BucketsModel>(
-            create: (context) => BucketsModel(),
           ),
         ],
         child: MyHomePage(),

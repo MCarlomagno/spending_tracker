@@ -1,21 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
-class PaymentDetail extends StatelessWidget {
-  const PaymentDetail({Key? key, required this.payment}) : super(key: key);
-  final Payment payment;
+class BucketDetail extends StatelessWidget {
+  const BucketDetail({Key? key, required this.bucket}) : super(key: key);
+  final Bucket bucket;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    String detail = payment.detail.toString();
-    String amount = payment.amount.toStringAsFixed(2);
+    String detail = bucket.name.toString();
+    String amount = bucket.amount.toStringAsFixed(2);
 
     if (detail.length == 0) {
-      detail = 'No detail provided';
+      detail = 'No name provided';
     }
 
     return Container(
@@ -27,7 +27,7 @@ class PaymentDetail extends StatelessWidget {
         children: [
           SizedBox(height: 30),
           Subtitle(
-            text: "Transaction detail",
+            text: "Bucket detail",
           ),
           SizedBox(height: 10),
           Text(
@@ -60,7 +60,7 @@ class PaymentDetail extends StatelessWidget {
               ),
               onPressed: () async {
                 await Provider.of<BalanceModel>(context, listen: false)
-                    .deletePaymentById(payment.id!);
+                    .deleteBucketById(bucket.id!);
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.delete),
