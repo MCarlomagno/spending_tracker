@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/widgets/home/buckets/buckets_list.dart';
-import 'package:spending_tracker/widgets/home/transactions_table.dart';
+import 'package:spending_tracker/widgets/home/transactions/transactions_table.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
-import 'add_transaction_form.dart';
+import 'transactions/add_transaction_form.dart';
 import 'app_bar.dart';
 import 'balance_banner.dart';
 

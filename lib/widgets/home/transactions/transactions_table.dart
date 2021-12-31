@@ -4,8 +4,8 @@ import 'package:spending_tracker/interfaces/payment.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/utils/utils.dart';
-import 'package:spending_tracker/widgets/home/payment_detail.dart';
-import '../../setup.dart';
+import 'package:spending_tracker/widgets/home/transactions/payment_detail.dart';
+import '../../../setup.dart';
 
 class TransactionsTable extends StatefulWidget {
   @override
