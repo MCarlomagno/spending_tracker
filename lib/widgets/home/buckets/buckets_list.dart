@@ -43,8 +43,8 @@ class _BucketsListState extends State<BucketsList> {
     var width = MediaQuery.of(context).size.width * 0.9;
     var height = 150.0;
 
-    return Consumer<BalanceModel>(builder: (context, paymentsModel, child) {
-      List<Bucket> buckets = paymentsModel.buckets;
+    return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
+      List<Bucket> buckets = balanceModel.buckets;
 
       return Container(
         width: width,
