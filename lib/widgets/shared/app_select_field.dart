@@ -1,5 +1,15 @@
 import 'package:flutter/material.dart';
 
+class AppSelectOption {
+  String label;
+  int value;
+
+  AppSelectOption({
+    required this.label,
+    required this.value,
+  });
+}
+
 class AppSelectField extends StatelessWidget {
   AppSelectField(
       {Key? key,
@@ -11,8 +21,8 @@ class AppSelectField extends StatelessWidget {
 
   final String? labelText;
   final bool autofocus;
-  final List<String> items;
-  final void Function(String?)? onChanged;
+  final List<AppSelectOption> items;
+  final void Function(int?)? onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -21,10 +31,13 @@ class AppSelectField extends StatelessWidget {
         this.items.length,
         (index) => DropdownMenuItem(
           onTap: () {},
-          child: Text(items[index]),
-          value: items[index],
+          child: Text(items[index].label),
+          value: items[index].value,
         ),
       ),
+      onTap: () {
+        FocusScope.of(context).unfocus();
+      },
       onChanged: this.onChanged,
       autofocus: this.autofocus,
       decoration: InputDecoration(
