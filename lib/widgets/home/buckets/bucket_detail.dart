@@ -40,7 +40,7 @@ class BucketDetail extends StatelessWidget {
               style: DefaultTextStyle.of(context).style,
               children: <TextSpan>[
                 TextSpan(
-                    text: r'$',
+                    text: bucket.currency,
                     style: TextStyle(color: Colors.grey[600], fontSize: 20)),
                 TextSpan(
                     text: amount,

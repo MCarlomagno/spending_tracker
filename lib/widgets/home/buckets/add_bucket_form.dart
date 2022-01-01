@@ -4,6 +4,7 @@ import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
 import 'package:spending_tracker/setup.dart';
+import 'package:spending_tracker/widgets/shared/app_select_field.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
 import 'package:spending_tracker/widgets/shared/button_progress.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
@@ -18,8 +19,15 @@ class _AddBucketFormState extends State<AddBucketForm> {
 
   final TextEditingController _amountController = new TextEditingController();
   final TextEditingController _nameController = new TextEditingController();
+  TextEditingController _currencyController = new TextEditingController();
 
   bool loading = false;
+
+  List<String> currencies = ['\$', 'AR\$', '€'];
+
+  _onCurrencyChanged(String? val) {
+    _currencyController = TextEditingController(text: val);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -39,10 +47,16 @@ class _AddBucketFormState extends State<AddBucketForm> {
             keyboardType: TextInputType.number,
             controller: _amountController,
             autofocus: true,
+          ),   
+          SizedBox(height: 10),       
+          AppSelectField(
+            labelText: "Currency",
+            items: currencies,
+            onChanged: _onCurrencyChanged,
           ),
           SizedBox(height: 10),
           AppTextField(
-            labelText: "name",
+            labelText: "Name",
             controller: _nameController,
           ),
           SizedBox(height: 10),
@@ -82,8 +96,9 @@ class _AddBucketFormState extends State<AddBucketForm> {
   Future<void> _createBucket() async {
     var amount = double.parse(this._amountController.text);
     var name = this._nameController.text;
+    var currency = this._currencyController.text;
 
-    var bucket = new Bucket(amount: amount, name: name);
+    var bucket = new Bucket(amount: amount, name: name, currency: currency);
     await _bucketsService.create(bucket: bucket);
 
     await Provider.of<BalanceModel>(context, listen: false).loadAllBuckets();

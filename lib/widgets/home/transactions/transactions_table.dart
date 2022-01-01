@@ -91,7 +91,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
                     DataCell(
                       Container(
                         child: Text(
-                          Utils.amountFormatString(payment.amount),
+                          payment.amount.toStringAsFixed(0),
                         ),
                       ),
                     ),

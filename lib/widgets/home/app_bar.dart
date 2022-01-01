@@ -66,10 +66,10 @@ class _HomeAppBarState extends State<HomeAppBar> {
                           builder: (context) => SettingsPage()));
                       Provider.of<UsersModel>(context, listen: false).refreshUser();
                       break;
-                    case 1:
-                      Provider.of<BalanceModel>(context, listen: false)
-                          .deleteAllPayments();
-                      break;
+                    // case 1:
+                    //   Provider.of<BalanceModel>(context, listen: false)
+                    //       .deleteAllPayments();
+                    //   break;
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
@@ -89,22 +89,22 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       ],
                     ),
                   ),
-                  PopupMenuItem<int>(
-                    value: 1,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: <Widget>[
-                        Icon(
-                          Icons.delete,
-                          color: Colors.red,
-                        ),
-                        Text(
-                          'Delete all',
-                          style: TextStyle(color: Colors.red),
-                        ),
-                      ],
-                    ),
-                  ),
+                  // PopupMenuItem<int>(
+                  //   value: 1,
+                  //   child: Row(
+                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //     children: <Widget>[
+                  //       Icon(
+                  //         Icons.delete,
+                  //         color: Colors.red,
+                  //       ),
+                  //       Text(
+                  //         'Delete all',
+                  //         style: TextStyle(color: Colors.red),
+                  //       ),
+                  //     ],
+                  //   ),
+                  // ),
                 ],
               ),
             ),

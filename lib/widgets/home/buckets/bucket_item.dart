@@ -59,7 +59,7 @@ class BucketItem extends StatelessWidget {
                 ? BucketTitle(title: bucket.name!)
                 : BucketTitle(title: 'Unnamed'),
             BucketAmount(
-              amount: Utils.amountFormatString(bucket.amount),
+              amount: Utils.amountFormatString(bucket.amount, bucket.currency),
             )
           ],
         ),

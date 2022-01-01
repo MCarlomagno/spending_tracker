@@ -1,5 +1,5 @@
 class Utils {
-  static amountFormatString(double amount) {
-    return "\$ " + amount.toStringAsFixed(0);
+  static amountFormatString(double amount, String currency) {
+    return currency + ' ' + amount.toStringAsFixed(0);
   }
 }
