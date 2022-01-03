@@ -1,11 +1,19 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
+import 'package:spending_tracker/widgets/startup_view.dart';
 
-void main() {
+import 'firebase_options.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   setupServices();
   runApp(MyApp());
 }
@@ -34,7 +42,7 @@ class MyApp extends StatelessWidget {
             create: (context) => UsersModel(),
           ),
         ],
-        child: MyHomePage(),
+        child: StartUpView(),
       ),
     );
   }

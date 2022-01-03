@@ -2,6 +2,7 @@
     package="com.example.spending_tracker">
    <application
         android:label="spending_tracker"
+        android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">
         <activity
             android:name=".MainActivity"
