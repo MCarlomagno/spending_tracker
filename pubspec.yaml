@@ -32,6 +32,8 @@ dependencies:
   provider: ^5.0.0
   sqflite:
   flutter_launcher_icons:
+  firebase_core: ^1.10.6
+  firebase_auth: ^3.3.4
 
 dev_dependencies:
   flutter_test:

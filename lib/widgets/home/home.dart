@@ -35,20 +35,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 ),
                 Padding(
                   padding: EdgeInsets.symmetric(horizontal: 20),
-                  child: Subtitle(text: "Balance"),
-                ),
-                SizedBox(
-                  height: contentMarginVertical,
-                ),
-                Align(
-                  alignment: Alignment.center,
-                  child: BalanceBanner(),
-                ),
-                SizedBox(
-                  height: contentMarginVertical,
-                ),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20),
                   child: Subtitle(text: "Buckets"),
                 ),
                 SizedBox(

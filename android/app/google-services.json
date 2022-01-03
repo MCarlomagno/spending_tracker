@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "255376897636",
+    "project_id": "spending-tracker-313e0",
+    "storage_bucket": "spending-tracker-313e0.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:255376897636:android:0a5242f6e4b0701e165171",
+        "android_client_info": {
+          "package_name": "com.example.spending_tracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "255376897636-4avoivemj009ou9iuhqngdtoct4adif8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD-2zTGNjlYLPGn8Ooj6p_RFcKRc0-5QU8"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "255376897636-4avoivemj009ou9iuhqngdtoct4adif8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

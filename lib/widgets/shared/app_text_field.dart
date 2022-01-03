@@ -3,8 +3,10 @@ import 'package:flutter/material.dart';
 class AppTextField extends StatelessWidget {
   AppTextField(
       {Key? key,
-      @required this.labelText,
-      @required this.controller,
+      required this.labelText,
+      required this.controller,
+      this.margin = const EdgeInsets.all(0),
+      this.obscureText = false,
       this.keyboardType = TextInputType.text,
       this.autofocus = false})
       : super(key: key);
@@ -13,13 +15,18 @@ class AppTextField extends StatelessWidget {
   final TextEditingController? controller;
   final TextInputType keyboardType;
   final bool autofocus;
+  final bool obscureText;
+  final EdgeInsetsGeometry margin;
 
   @override
   Widget build(BuildContext context) {
-    return TextField(
+    return Container(
+      margin: margin,
+      child: TextField(
       controller: this.controller,
       autofocus: this.autofocus,
       cursorColor: Color(0xFF5BC8AA),
+      obscureText: this.obscureText,
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelText: labelText,
@@ -40,6 +47,7 @@ class AppTextField extends StatelessWidget {
         ),
       ),
       keyboardType: keyboardType,
-    );
+    ),
+    ) ;
   }
 }

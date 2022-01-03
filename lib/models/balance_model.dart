@@ -22,8 +22,19 @@ class BalanceModel extends ChangeNotifier {
   UnmodifiableListView<Payment> get payments => UnmodifiableListView(_payments);
   bool get loadingPayments => _loadingPayments;
 
-  double get balance =>
-      _buckets.fold(0.0, (value, element) => value + element.amount);
+  List<String> currencies = ['\$', 'AR\$', '€'];
+
+  Map<String, double> get balance {
+    Map<String, double> balances = {};
+    buckets.forEach((b) {
+      if (balances.containsKey(b.currency)) {
+        balances[b.currency] = balances[b.currency]! + b.amount;
+      } else {
+        balances.addAll({b.currency: b.amount});
+      }
+    });
+    return balances;
+  }
 
   void addBucket(Bucket bucket) {
     _buckets.add(bucket);
