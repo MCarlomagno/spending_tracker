@@ -14,6 +14,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "255376897636-f28cetdd9veck3sjd0tfcmrkdhoaboon.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.spending_tracker",
+            "certificate_hash": "effec051362ff4033974f950f0295653933cdbb3"
+          }
+        },
+        {
           "client_id": "255376897636-4avoivemj009ou9iuhqngdtoct4adif8.apps.googleusercontent.com",
           "client_type": 3
         }

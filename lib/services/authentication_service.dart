@@ -16,6 +16,7 @@ class AuthenticationService {
       );
       return user.user != null;
     } catch (e) {
+      print(e.toString());
       return e;
     }
   }
@@ -31,7 +32,8 @@ class AuthenticationService {
       );
       return authResult.user != null;
     } catch (e) {
-      return ;
+      print(e.toString());
+      return e;
     }
   }
 }

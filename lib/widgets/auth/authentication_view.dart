@@ -40,7 +40,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
             AppButton(
               margin: EdgeInsets.all(10),
               child: Text('Get in'),
-              onPressed: () => _authenticationService.loginWithEmail(
+              onPressed: () => _authenticationService.signUpWithEmail(
                 email: _emailController.text,
                 password: _passwordController.text,
               ),

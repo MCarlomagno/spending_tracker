@@ -4,7 +4,6 @@ import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/setup.dart';
-import 'package:spending_tracker/widgets/home/home.dart';
 import 'package:spending_tracker/widgets/startup_view.dart';
 
 import 'firebase_options.dart';
