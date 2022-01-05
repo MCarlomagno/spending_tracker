@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppButton extends StatelessWidget {
   final Widget child;
-  final Function() onPressed;
+  final Function()? onPressed;
   final EdgeInsetsGeometry margin;
 
   const AppButton({

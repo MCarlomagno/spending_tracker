@@ -9,11 +9,11 @@ import 'package:spending_tracker/widgets/startup_view.dart';
 import 'firebase_options.dart';
 
 void main() async {
+  setupServices();
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  setupServices();
   runApp(MyApp());
 }
 
@@ -32,17 +32,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Colors.white,
           primarySwatch: Colors.blue,
           fontFamily: 'Poppins'),
-      home: MultiProvider(
-        providers: [
-          ChangeNotifierProvider<BalanceModel>(
-            create: (context) => BalanceModel(),
-          ),
-          ChangeNotifierProvider<UsersModel>(
-            create: (context) => UsersModel(),
-          ),
-        ],
-        child: StartUpView(),
-      ),
+      home: StartUpView(),
     );
   }
 }

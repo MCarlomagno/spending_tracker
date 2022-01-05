@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/user.dart';
-import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/models/users_model.dart';
+import 'package:spending_tracker/services/authentication_service.dart';
+import 'package:spending_tracker/widgets/auth/authentication_view.dart';
 import 'package:spending_tracker/widgets/settings/settings.dart';
+import 'package:spending_tracker/widgets/startup_view.dart';
+
+import '../../setup.dart';
 
 class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
   const HomeAppBar({Key? key}) : super(key: key);
@@ -16,9 +20,19 @@ class HomeAppBar extends StatefulWidget implements PreferredSizeWidget {
 }
 
 class _HomeAppBarState extends State<HomeAppBar> {
+  final _authenticationService = getIt<AuthenticationService>();
   User? user;
   bool isLoading = false;
   String title = "Welcome back";
+
+  _singOut() async {
+    await _authenticationService.logOut();
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (context) => AuthenticationView(),
+      ),
+    );
+  }
 
   Future<User?> loadUser() async {
     setState(() => isLoading = true);
@@ -38,7 +52,6 @@ class _HomeAppBarState extends State<HomeAppBar> {
     var contentWidth = MediaQuery.of(context).size.width * 0.8;
 
     return Consumer<UsersModel>(builder: (context, usersModel, child) {
-
       if (usersModel.user?.name != null && usersModel.user?.name != '') {
         title = "Welcome back,\n${usersModel.user?.name}";
       } else {
@@ -64,12 +77,12 @@ class _HomeAppBarState extends State<HomeAppBar> {
                     case 0:
                       await Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => SettingsPage()));
-                      Provider.of<UsersModel>(context, listen: false).refreshUser();
+                      Provider.of<UsersModel>(context, listen: false)
+                          .refreshUser();
                       break;
-                    // case 1:
-                    //   Provider.of<BalanceModel>(context, listen: false)
-                    //       .deleteAllPayments();
-                    //   break;
+                    case 1:
+                      _singOut();
+                      break;
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<int>>[
@@ -89,22 +102,22 @@ class _HomeAppBarState extends State<HomeAppBar> {
                       ],
                     ),
                   ),
-                  // PopupMenuItem<int>(
-                  //   value: 1,
-                  //   child: Row(
-                  //     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  //     children: <Widget>[
-                  //       Icon(
-                  //         Icons.delete,
-                  //         color: Colors.red,
-                  //       ),
-                  //       Text(
-                  //         'Delete all',
-                  //         style: TextStyle(color: Colors.red),
-                  //       ),
-                  //     ],
-                  //   ),
-                  // ),
+                  PopupMenuItem<int>(
+                    value: 1,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: <Widget>[
+                        Icon(
+                          Icons.logout,
+                          color: Colors.red,
+                        ),
+                        Text(
+                          'Sign Out',
+                          style: TextStyle(color: Colors.red),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
             ),
