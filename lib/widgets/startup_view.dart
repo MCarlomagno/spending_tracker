@@ -16,7 +16,6 @@ class _StartUpViewState extends State<StartUpView> {
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     _checkUser();
   }

@@ -33,7 +33,16 @@ class AuthenticationService {
       return authResult.user != null;
     } catch (e) {
       print(e.toString());
-      return e;
+      rethrow;
+    }
+  }
+
+  Future logOut() async {
+    try {
+      return _firebaseAuth.signOut();
+    } catch (e) {
+      print(e.toString());
+      rethrow;
     }
   }
 }
