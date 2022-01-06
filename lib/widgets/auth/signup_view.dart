@@ -1,8 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
 import 'package:spending_tracker/widgets/shared/app_button.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/error_message.dart';
 import '../../setup.dart';
 
 class SignupView extends StatefulWidget {
@@ -18,9 +20,14 @@ class _SignupViewState extends State<SignupView> {
   final _passwordController = TextEditingController();
 
   bool _loading = false;
+  bool _errored = false;
+  String? errorMsg = "";
 
   _onSubmit() async {
-    setState(() => _loading = true);
+    setState(() {
+      _loading = true;
+      _errored = false;
+    });
     try {
       await _authenticationService.signUpWithEmail(
         email: _emailController.text,
@@ -33,7 +40,14 @@ class _SignupViewState extends State<SignupView> {
         ),
       );
     } catch (e) {
-      setState(() => _loading = false);
+      print(e);
+      if (e is FirebaseAuthException) {
+        setState(() {
+          _loading = false;
+          _errored = true;
+          errorMsg = e.message;
+        });
+      }
     }
   }
 
@@ -53,6 +67,12 @@ class _SignupViewState extends State<SignupView> {
           controller: _passwordController,
           labelText: 'Password',
           obscureText: true,
+        ),
+        Visibility(
+          child: ErrorMessage(
+            message: errorMsg,
+          ),
+          visible: _errored,
         ),
         AppButton(
           margin: EdgeInsets.all(10),
