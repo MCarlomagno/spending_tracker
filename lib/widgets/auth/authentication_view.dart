@@ -18,6 +18,7 @@ class _AuthenticationViewState extends State<AuthenticationView> {
         appBar: AppBar(
           backgroundColor: Color(0xFF5BC8AA),
           bottom: TabBar(
+            indicatorColor: Colors.white,
             tabs: [
               Tab(
                 icon: Icon(Icons.login),
