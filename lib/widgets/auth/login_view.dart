@@ -43,7 +43,7 @@ class _LoginViewState extends State<LoginView> {
       print(e);
       if (e is FirebaseAuthException) {
         setState(() {
-          _loading = false; 
+          _loading = false;
           _errored = true;
           errorMsg = e.message;
         });
@@ -53,41 +53,43 @@ class _LoginViewState extends State<LoginView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AppTextField(
-          margin: EdgeInsets.all(10),
-          controller: _emailController,
-          labelText: 'Email',
-          keyboardType: TextInputType.emailAddress,
-        ),
-        AppTextField(
-          margin: EdgeInsets.all(10),
-          controller: _passwordController,
-          labelText: 'Password',
-          obscureText: true,
-        ),
-        Visibility(
-          child: ErrorMessage(
-            message: errorMsg,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppTextField(
+            margin: EdgeInsets.all(10),
+            controller: _emailController,
+            labelText: 'Email',
+            keyboardType: TextInputType.emailAddress,
           ),
-          visible: _errored,
-        ),
-        AppButton(
-          margin: EdgeInsets.all(10),
-          child: _loading
-              ? SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                )
-              : Text('Log in'),
-          onPressed: _loading ? null : _onSubmit,
-        ),
-      ],
+          AppTextField(
+            margin: EdgeInsets.all(10),
+            controller: _passwordController,
+            labelText: 'Password',
+            obscureText: true,
+          ),
+          Visibility(
+            child: ErrorMessage(
+              message: errorMsg,
+            ),
+            visible: _errored,
+          ),
+          AppButton(
+            margin: EdgeInsets.all(10),
+            child: _loading
+                ? SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  )
+                : Text('Log in'),
+            onPressed: _loading ? null : _onSubmit,
+          ),
+        ],
+      ),
     );
   }
 }
