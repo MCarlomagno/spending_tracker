@@ -1,11 +1,10 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/interfaces/user.dart';
 import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/widgets/auth/authentication_view.dart';
 import 'package:spending_tracker/widgets/settings/settings.dart';
-import 'package:spending_tracker/widgets/startup_view.dart';
 
 import '../../setup.dart';
 
@@ -52,8 +51,9 @@ class _HomeAppBarState extends State<HomeAppBar> {
     var contentWidth = MediaQuery.of(context).size.width * 0.8;
 
     return Consumer<UsersModel>(builder: (context, usersModel, child) {
-      if (usersModel.user?.name != null && usersModel.user?.name != '') {
-        title = "Welcome back,\n${usersModel.user?.name}";
+      User? user = _authenticationService.currentUser;
+      if (user?.displayName != null && user?.displayName != '') {
+        title = "Welcome back,\n${user!.displayName}";
       } else {
         title = "Welcome back";
       }

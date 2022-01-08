@@ -1,7 +1,6 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:spending_tracker/interfaces/user.dart';
-import 'package:spending_tracker/services/users_service.dart';
-
+import 'package:spending_tracker/services/authentication_service.dart';
 import '../../setup.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -12,31 +11,30 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
-
-  User? user;
-  UsersService _usersService = getIt.get<UsersService>();
+  AuthenticationService _authenticationService =
+      getIt.get<AuthenticationService>();
   TextEditingController _controller = TextEditingController();
 
+  User? user;
+
   Future<void> loadUser() async {
-    user = await _usersService.getSingle();
-    if(user != null) {
-      _controller.text = user?.name ?? '';  
+    user = _authenticationService.currentUser;
+    if (user != null) {
+      _controller.text = user?.displayName ?? '';
     }
   }
 
- Future<void> saveName() async {
-    if (user?.name != null) {
-      await _usersService.patchById(user!.id!, name: _controller.text);
-    } else {
-      User newUser = new User(name: _controller.text);
-      user = await _usersService.create(user: newUser);
-    }
+  Future<void> saveName() async {
+    await _authenticationService.updateName(name: _controller.text);
   }
 
-  Future<void> deleteAll() async {
-    await _usersService.deleteAll();
-    user = null;
-    _controller.text = '';
+  Future<void> deleteName() async {
+    if (user != null) {
+      await _authenticationService.updateName(name: null);
+      setState(() {
+        _controller = TextEditingController();
+      });
+    }
   }
 
   @override
@@ -56,20 +54,19 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.only(top: 20, left: 20, right: 20),
         children: [
           TextField(
-            controller: _controller,
-            maxLines: 1,
-            decoration: InputDecoration(
-                label: Text('Name'),
-                hintMaxLines: 20,
-                suffixIcon: IconButton(
-                  icon: Icon(Icons.close),
-                  onPressed: () => deleteAll(),
-                )),
-            onEditingComplete: () async  {
-              await saveName(); 
-              FocusScope.of(context).unfocus();
-            }
-          )
+              controller: _controller,
+              maxLines: 1,
+              decoration: InputDecoration(
+                  label: Text('Name'),
+                  hintMaxLines: 20,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: () => deleteName(),
+                  )),
+              onEditingComplete: () async {
+                await saveName();
+                FocusScope.of(context).unfocus();
+              })
         ],
       ),
     );

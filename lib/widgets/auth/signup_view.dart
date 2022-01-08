@@ -18,6 +18,7 @@ class _SignupViewState extends State<SignupView> {
   final _authenticationService = getIt<AuthenticationService>();
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  final _nameController = TextEditingController();
 
   bool _loading = false;
   bool _errored = false;
@@ -32,6 +33,7 @@ class _SignupViewState extends State<SignupView> {
       await _authenticationService.signUpWithEmail(
         email: _emailController.text,
         password: _passwordController.text,
+        name: _nameController.text,
       );
       setState(() => _loading = false);
       Navigator.of(context).pushReplacement(
@@ -53,41 +55,48 @@ class _SignupViewState extends State<SignupView> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        AppTextField(
-          margin: EdgeInsets.all(10),
-          controller: _emailController,
-          labelText: 'Email',
-          keyboardType: TextInputType.emailAddress,
-        ),
-        AppTextField(
-          margin: EdgeInsets.all(10),
-          controller: _passwordController,
-          labelText: 'Password',
-          obscureText: true,
-        ),
-        Visibility(
-          child: ErrorMessage(
-            message: errorMsg,
+    return SingleChildScrollView(
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          AppTextField(
+            margin: EdgeInsets.all(10),
+            controller: _emailController,
+            labelText: 'Email',
+            keyboardType: TextInputType.emailAddress,
           ),
-          visible: _errored,
-        ),
-        AppButton(
-          margin: EdgeInsets.all(10),
-          child: _loading
-              ? SizedBox(
-                  height: 20,
-                  width: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                  ),
-                )
-              : Text('Create account'),
-          onPressed: _loading ? null : _onSubmit,
-        ),
-      ],
+          AppTextField(
+            margin: EdgeInsets.all(10),
+            controller: _passwordController,
+            labelText: 'Password',
+            obscureText: true,
+          ),
+          AppTextField(
+            margin: EdgeInsets.all(10),
+            controller: _nameController,
+            labelText: 'Name (Optional)',
+          ),
+          Visibility(
+            child: ErrorMessage(
+              message: errorMsg,
+            ),
+            visible: _errored,
+          ),
+          AppButton(
+            margin: EdgeInsets.all(10),
+            child: _loading
+                ? SizedBox(
+                    height: 20,
+                    width: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  )
+                : Text('Create account'),
+            onPressed: _loading ? null : _onSubmit,
+          ),
+        ],
+      ),
     );
   }
 }

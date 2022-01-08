@@ -5,6 +5,8 @@ class AuthenticationService {
 
   bool get isLoggedIn => this._firebaseAuth.currentUser != null;
 
+  User? get currentUser => this._firebaseAuth.currentUser;
+
   Future loginWithEmail({
     required String email,
     required String password,
@@ -24,12 +26,18 @@ class AuthenticationService {
   Future signUpWithEmail({
     required String email,
     required String password,
+    String? name,
   }) async {
     try {
       var authResult = await _firebaseAuth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
+
+      if (authResult.user != null) {
+        await authResult.user!.updateDisplayName(name);
+      }
+
       return authResult.user != null;
     } catch (e) {
       print(e.toString());
@@ -44,5 +52,9 @@ class AuthenticationService {
       print(e.toString());
       rethrow;
     }
+  }
+
+  Future updateName({required String? name}) async {
+    await currentUser!.updateDisplayName(name);
   }
 }
