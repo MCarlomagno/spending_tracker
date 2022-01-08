@@ -29,82 +29,84 @@ class _MyHomePageState extends State<MyHomePage> {
           create: (context) => UsersModel(),
         ),
       ],
-      child: Scaffold(
-        appBar: HomeAppBar(),
-        body: SizedBox.expand(
-          child: Container(
-            alignment: Alignment.topCenter,
-            child: SingleChildScrollView(
-              padding: EdgeInsets.zero,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  SizedBox(
-                    height: contentMarginVertical,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Subtitle(text: "Buckets"),
-                  ),
-                  SizedBox(
-                    height: contentMarginVertical,
-                  ),
-                  Align(
-                    alignment: Alignment.center,
-                    child: BucketsList(),
-                  ),
-                  SizedBox(
-                    height: contentMarginVertical,
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20),
-                    child: Subtitle(text: "Transactions"),
-                  ),
-                  SizedBox(
-                    height: contentMarginVertical,
-                  ),
-                  TransactionsTable(),
-                ],
+      child: Builder(builder: (context) {
+        return Scaffold(
+          appBar: HomeAppBar(),
+          body: SizedBox.expand(
+            child: Container(
+              alignment: Alignment.topCenter,
+              child: SingleChildScrollView(
+                padding: EdgeInsets.zero,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      height: contentMarginVertical,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Subtitle(text: "Buckets"),
+                    ),
+                    SizedBox(
+                      height: contentMarginVertical,
+                    ),
+                    Align(
+                      alignment: Alignment.center,
+                      child: BucketsList(),
+                    ),
+                    SizedBox(
+                      height: contentMarginVertical,
+                    ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: Subtitle(text: "Transactions"),
+                    ),
+                    SizedBox(
+                      height: contentMarginVertical,
+                    ),
+                    TransactionsTable(),
+                  ],
+                ),
               ),
             ),
           ),
-        ),
-        floatingActionButton: FloatingActionButton.extended(
-          label: Text.rich(
-            TextSpan(
-              children: [
-                WidgetSpan(
-                  child: Padding(
-                    padding: EdgeInsets.only(right: 10),
-                    child: Icon(
-                      Icons.add,
+          floatingActionButton: FloatingActionButton.extended(
+            label: Text.rich(
+              TextSpan(
+                children: [
+                  WidgetSpan(
+                    child: Padding(
+                      padding: EdgeInsets.only(right: 10),
+                      child: Icon(
+                        Icons.add,
+                      ),
                     ),
                   ),
-                ),
-                TextSpan(text: 'NEW TRANSACTION'),
-              ],
+                  TextSpan(text: 'NEW TRANSACTION'),
+                ],
+              ),
             ),
+            onPressed: () {
+              final balanceModel =
+                  Provider.of<BalanceModel>(context, listen: false);
+              showModalBottomSheet(
+                  isScrollControlled: true,
+                  context: context,
+                  builder: (BuildContext context) {
+                    return StatefulBuilder(
+                      builder: (BuildContext context, StateSetter setState) {
+                        return ListenableProvider.value(
+                          value: balanceModel,
+                          child: AddTransactionForm(),
+                        );
+                      },
+                    );
+                  });
+            },
+            backgroundColor: Color(0xFF5BC8AA),
           ),
-          onPressed: () {
-            final balanceModel =
-                Provider.of<BalanceModel>(context, listen: false);
-            showModalBottomSheet(
-                isScrollControlled: true,
-                context: context,
-                builder: (BuildContext context) {
-                  return StatefulBuilder(
-                    builder: (BuildContext context, StateSetter setState) {
-                      return ListenableProvider.value(
-                        value: balanceModel,
-                        child: AddTransactionForm(),
-                      );
-                    },
-                  );
-                });
-          },
-          backgroundColor: Color(0xFF5BC8AA),
-        ),
-      ),
+        );
+      }),
     );
   }
 }
