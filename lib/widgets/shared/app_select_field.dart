@@ -35,9 +35,6 @@ class AppSelectField extends StatelessWidget {
           value: items[index].value,
         ),
       ),
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
       onChanged: this.onChanged,
       autofocus: this.autofocus,
       decoration: InputDecoration(

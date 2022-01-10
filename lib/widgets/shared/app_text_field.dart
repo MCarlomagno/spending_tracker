@@ -30,6 +30,7 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelText: labelText,
+        hintText: labelText,
         border: InputBorder.none,
         filled: true,
         fillColor: Colors.grey[200],

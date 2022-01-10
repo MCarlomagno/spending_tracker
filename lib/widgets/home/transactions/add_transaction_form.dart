@@ -62,6 +62,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
           .toList();
 
       return Container(
+        height: MediaQuery.of(context).size.height,
         padding: EdgeInsets.symmetric(horizontal: 30),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
