@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:spending_tracker/services/authentication_service.dart';
+import 'package:spending_tracker/widgets/shared/app_button.dart';
 import '../../setup.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -17,6 +18,8 @@ class _SettingsPageState extends State<SettingsPage> {
 
   User? user;
 
+  bool isLoading = false;
+
   Future<void> loadUser() async {
     user = _authenticationService.currentUser;
     if (user != null) {
@@ -24,17 +27,16 @@ class _SettingsPageState extends State<SettingsPage> {
     }
   }
 
-  Future<void> saveName() async {
-    await _authenticationService.updateName(name: _controller.text);
+  _clearInput() {
+    setState(() {
+      _controller = TextEditingController(text: '');
+    });
   }
 
-  Future<void> deleteName() async {
-    if (user != null) {
-      await _authenticationService.updateName(name: null);
-      setState(() {
-        _controller = TextEditingController();
-      });
-    }
+  _onSave() async {
+    setState(() => isLoading = true);
+    await _authenticationService.updateName(name: _controller.text);
+    setState(() => isLoading = false);
   }
 
   @override
@@ -54,19 +56,30 @@ class _SettingsPageState extends State<SettingsPage> {
         padding: EdgeInsets.only(top: 20, left: 20, right: 20),
         children: [
           TextField(
-              controller: _controller,
-              maxLines: 1,
-              decoration: InputDecoration(
-                  label: Text('Name'),
-                  hintMaxLines: 20,
-                  suffixIcon: IconButton(
-                    icon: Icon(Icons.close),
-                    onPressed: () => deleteName(),
-                  )),
-              onEditingComplete: () async {
-                await saveName();
-                FocusScope.of(context).unfocus();
-              })
+            controller: _controller,
+            maxLines: 1,
+            decoration: InputDecoration(
+              label: Text('Name'),
+              hintMaxLines: 20,
+              suffixIcon: IconButton(
+                icon: Icon(Icons.close),
+                onPressed: _clearInput,
+              ),
+            ),
+          ),
+          AppButton(
+            child: !isLoading
+                ? Text('Save')
+                : SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                    ),
+                  ),
+            onPressed: isLoading ? null : _onSave,
+            margin: EdgeInsets.only(top: 20),
+          ),
         ],
       ),
     );
