@@ -24,6 +24,12 @@ class _SignupViewState extends State<SignupView> {
   bool _errored = false;
   String? errorMsg = "";
 
+  bool _showPassword = false;
+
+  _togglePasswordVisibility() {
+    setState(() => _showPassword = !_showPassword);
+  }
+
   _onSubmit() async {
     setState(() {
       _loading = true;
@@ -69,7 +75,20 @@ class _SignupViewState extends State<SignupView> {
             margin: EdgeInsets.all(10),
             controller: _passwordController,
             labelText: 'Password',
-            obscureText: true,
+            obscureText: _showPassword,
+            suffix: _showPassword
+                ? IconButton(
+                    padding: EdgeInsets.all(0),
+                    splashRadius: 1,
+                    icon: Icon(Icons.visibility),
+                    onPressed: _togglePasswordVisibility,
+                  )
+                : IconButton(
+                    padding: EdgeInsets.all(0),
+                    splashRadius: 1,
+                    icon: Icon(Icons.visibility_off),
+                    onPressed: _togglePasswordVisibility,
+                  ),
           ),
           AppTextField(
             margin: EdgeInsets.all(10),

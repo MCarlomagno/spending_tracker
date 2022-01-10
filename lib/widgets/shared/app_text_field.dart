@@ -8,7 +8,9 @@ class AppTextField extends StatelessWidget {
       this.margin = const EdgeInsets.all(0),
       this.obscureText = false,
       this.keyboardType = TextInputType.text,
-      this.autofocus = false})
+      this.autofocus = false,
+      this.suffix,
+      })
       : super(key: key);
 
   final String? labelText;
@@ -17,11 +19,13 @@ class AppTextField extends StatelessWidget {
   final bool autofocus;
   final bool obscureText;
   final EdgeInsetsGeometry margin;
+  final Widget? suffix;
 
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: margin,
+      height: 60,
       child: TextField(
       controller: this.controller,
       autofocus: this.autofocus,
@@ -30,6 +34,7 @@ class AppTextField extends StatelessWidget {
       decoration: InputDecoration(
         floatingLabelBehavior: FloatingLabelBehavior.never,
         labelText: labelText,
+        suffix: suffix,
         hintText: labelText,
         border: InputBorder.none,
         filled: true,
