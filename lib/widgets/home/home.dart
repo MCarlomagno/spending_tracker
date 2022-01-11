@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/models/balance_model.dart';
-import 'package:spending_tracker/models/users_model.dart';
 import 'package:spending_tracker/widgets/home/buckets/buckets_list.dart';
 import 'package:spending_tracker/widgets/home/transactions/transactions_table.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
@@ -24,9 +23,6 @@ class _MyHomePageState extends State<MyHomePage> {
       providers: [
         ChangeNotifierProvider<BalanceModel>(
           create: (context) => BalanceModel(),
-        ),
-        ChangeNotifierProvider<UsersModel>(
-          create: (context) => UsersModel(),
         ),
       ],
       child: Builder(builder: (context) {
