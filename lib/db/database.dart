@@ -25,7 +25,6 @@ class DatabaseProvider {
         await db.execute('CREATE TABLE Payments (id INTEGER PRIMARY KEY, detail TEXT, date DATE, amount REAL)');
         await db.execute('CREATE TABLE Bucket (id INTEGER PRIMARY KEY, name TEXT, currency TEXT, amount REAL)');
         await db.execute("INSERT INTO Bucket (name, currency, amount) values ('Cash', 'AR\$', 0.0)");
-        await db.execute('CREATE TABLE Users (id INTEGER PRIMARY KEY, name TEXT)');
       },
     );
 
