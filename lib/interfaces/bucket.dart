@@ -1,5 +1,5 @@
 class Bucket {
-  int? id;
+  String? id;
   double amount;
   String currency;
   String? name;
@@ -13,13 +13,13 @@ class Bucket {
         "currency": this.currency,
       };
 
-  factory Bucket.fromMap(Map<String, dynamic> json) => new Bucket(
-        id: json["id"],
+  factory Bucket.fromMap(Map<String, dynamic> json, String id) => new Bucket(
+        id: id,
         amount: json["amount"],
         name: json["name"],
         currency: json["currency"],
       );
 
   String toString() =>
-      '(amount = ${this.amount}, name=${this.name}, currency=${this.currency})';
+      '(id=${this.id}, amount = ${this.amount}, name=${this.name}, currency=${this.currency})';
 }

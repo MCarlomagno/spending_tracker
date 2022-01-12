@@ -24,12 +24,12 @@ class _AddBucketFormState extends State<AddBucketForm> {
   bool loading = false;
 
   List<AppSelectOption> currencies = [
-    AppSelectOption(label: '\$', value: 1),
-    AppSelectOption(label: 'AR\$', value: 2),
-    AppSelectOption(label: '€', value: 3),
+    AppSelectOption(label: '\$', value: '1'),
+    AppSelectOption(label: 'AR\$', value: '2'),
+    AppSelectOption(label: '€', value: '3'),
   ];
 
-  _onCurrencyChanged(int? val) {
+  _onCurrencyChanged(String? val) {
     AppSelectOption selected =
         currencies.firstWhere((element) => element.value == val);
     _currencyController = TextEditingController(text: selected.label);

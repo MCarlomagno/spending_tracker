@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class AppSelectOption {
   String label;
-  int value;
+  String value;
 
   AppSelectOption({
     required this.label,
@@ -22,7 +22,7 @@ class AppSelectField extends StatelessWidget {
   final String? labelText;
   final bool autofocus;
   final List<AppSelectOption> items;
-  final void Function(int?)? onChanged;
+  final void Function(String?)? onChanged;
 
   @override
   Widget build(BuildContext context) {

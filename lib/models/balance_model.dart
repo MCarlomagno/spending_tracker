@@ -52,7 +52,7 @@ class BalanceModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteBucketById(int id) async {
+  Future<void> deleteBucketById(String id) async {
     setLoadingBuckets(true);
     await this._bucketsService.deleteById(id);
     await this.loadAllBuckets();
