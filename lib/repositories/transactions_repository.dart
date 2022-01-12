@@ -1,57 +1,39 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:spending_tracker/db/database.dart';
 import 'package:spending_tracker/interfaces/transaction.dart' as model;
-import 'package:sqflite/sqflite.dart';
-import '../setup.dart';
 
 class TransactionsRepository {
   CollectionReference transactions =
       FirebaseFirestore.instance.collection('transactions');
 
-  Future<int?> create(model.Transaction transactin) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.insert("Payments", transactin.toMap());
-    return res;
+  Future<String> create(model.Transaction transactin) async {
+    DocumentReference<Object?> result =
+        await transactions.add(transactin.toMap());
+    return result.id;
+  }
+
+  Future<model.Transaction?> getById(String id) async {
+    DocumentReference<Object?> ref = transactions.doc(id);
+    DocumentSnapshot<Object?> result = await ref.get();
+    return model.Transaction.fromMap(
+        result.data() as Map<String, dynamic>, result.id);
   }
 
   Future<List<model.Transaction>> getAll() async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.query("Payments");
-    var allPayments = res
-        ?.map((e) => model.Transaction.fromMap(e))
+    QuerySnapshot<Object?> query = await transactions.get();
+    var allBuckets = query.docs
+        .map((e) =>
+            model.Transaction.fromMap(e.data() as Map<String, dynamic>, e.id))
         .toList()
         .reversed
         .toList();
-    return allPayments ?? [];
+    return allBuckets;
   }
 
-  Future<int?> deleteAll() async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.delete("Payments");
-    return res;
+  Future<void> deleteById(String id) async {
+    await transactions.doc(id).delete();
   }
 
-  Future<int?> deleteById(int id) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.delete("Payments", where: 'id = ?', whereArgs: [id]);
-    return res;
-  }
-
-  Future<model.Transaction?> getById(int id) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.query("Payments", where: 'id = ?', whereArgs: [id]);
-    return model.Transaction.fromMap(res![0]);
-  }
-
-  Future<void> updateById(int id, model.Transaction payment) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    await db
-        ?.update("Payments", payment.toMap(), where: 'id = ?', whereArgs: [id]);
+  Future<void> updateById(String id, model.Transaction transaction) async {
+    await transactions.doc(id).set(transaction.toMap());
   }
 }

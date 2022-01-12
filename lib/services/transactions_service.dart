@@ -13,15 +13,11 @@ class TransactionsService {
     return allTransactions;
   }
 
-  Future<void> deleteAll() async {
-    await transactionsRepository.deleteAll();
-  }
-
-  Future<void> deleteById(int id) async {
+  Future<void> deleteById(String id) async {
     await transactionsRepository.deleteById(id);
   }
 
-  Future<void> patchById(int id, {String? detail}) async {
+  Future<void> patchById(String id, {String? detail}) async {
     Transaction? transaction = await transactionsRepository.getById(id);
     if (transaction != null) {
       transaction.detail = detail;

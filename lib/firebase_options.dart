@@ -17,20 +17,14 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     // ignore: missing_enum_constant_in_switch
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for macos - '
@@ -43,11 +37,32 @@ class DefaultFirebaseOptions {
     );
   }
 
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyD6L68eJlzg_5Dm2SiuSN5KeQ0ECdrDdKk',
+    appId: '1:255376897636:web:761207edc5a6b64b165171',
+    messagingSenderId: '255376897636',
+    projectId: 'spending-tracker-313e0',
+    authDomain: 'spending-tracker-313e0.firebaseapp.com',
+    storageBucket: 'spending-tracker-313e0.appspot.com',
+    measurementId: 'G-EW56HN3M3M',
+  );
+
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyD-2zTGNjlYLPGn8Ooj6p_RFcKRc0-5QU8',
     appId: '1:255376897636:android:0a5242f6e4b0701e165171',
     messagingSenderId: '255376897636',
     projectId: 'spending-tracker-313e0',
     storageBucket: 'spending-tracker-313e0.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDDXvASl8XoJEGM32nixIHkFKVMbZ4dQpM',
+    appId: '1:255376897636:ios:54fcdfcbde2de1c8165171',
+    messagingSenderId: '255376897636',
+    projectId: 'spending-tracker-313e0',
+    storageBucket: 'spending-tracker-313e0.appspot.com',
+    androidClientId: '255376897636-f28cetdd9veck3sjd0tfcmrkdhoaboon.apps.googleusercontent.com',
+    iosClientId: '255376897636-j28v17u9dcut311g438t1il53clreoh6.apps.googleusercontent.com',
+    iosBundleId: 'io.flutter.flutter.app',
   );
 }

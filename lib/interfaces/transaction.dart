@@ -1,5 +1,5 @@
 class Transaction {
-  int? id;
+  String? id;
   double amount;
   DateTime date;
   String? detail;
@@ -13,13 +13,14 @@ class Transaction {
         "detail": this.detail,
       };
 
-  factory Transaction.fromMap(Map<String, dynamic> json) => new Transaction(
-        id: json["id"],
+  factory Transaction.fromMap(Map<String, dynamic> json, String id) =>
+      new Transaction(
+        id: id,
         amount: json["amount"],
         date: DateTime.parse(json["date"]),
         detail: json["detail"],
       );
 
   String toString() =>
-      '(amount = ${this.amount}, date=${this.date}, detail=${this.detail})';
+      '(id= ${this.id} amount = ${this.amount}, date=${this.date}, detail=${this.detail})';
 }

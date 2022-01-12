@@ -81,7 +81,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
                         controller: TextEditingController(
                             text: transaction.detail ?? "no detail"),
                         onFieldSubmitted: (val) async {
-                          await _transactionsService.patchById(transaction.id ?? 0,
+                          await _transactionsService.patchById(transaction.id!,
                               detail: val);
                           await balanceModel.loadAllTransactions();
                         },

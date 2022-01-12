@@ -76,17 +76,9 @@ class BalanceModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> deleteTransactionById(int id) async {
+  Future<void> deleteTransactionById(String id) async {
     setLoadingTransactions(true);
     await _transactionsService.deleteById(id);
-    await loadAllTransactions();
-    setLoadingTransactions(false);
-    notifyListeners();
-  }
-
-  Future<void> deleteAllTransactions() async {
-    setLoadingTransactions(true);
-    await _transactionsService.deleteAll();
     await loadAllTransactions();
     setLoadingTransactions(false);
     notifyListeners();
