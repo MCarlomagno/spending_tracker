@@ -13,11 +13,11 @@ class BucketsService {
     return allBuckets;
   }
 
-  Future<void> deleteById(int id) async {
+  Future<void> deleteById(String id) async {
     await bucketsRepository.deleteById(id);
   }
 
-  Future<void> changeAmount(int id, {double? amount}) async {
+  Future<void> changeAmount(String id, {double? amount}) async {
     Bucket? bucket = await bucketsRepository.getById(id);
     if (bucket != null && amount != null) {
       bucket.amount += amount;
@@ -25,7 +25,7 @@ class BucketsService {
     }
   }
 
-  Future<void> patchById(int id, {double? amount}) async {
+  Future<void> patchById(String id, {double? amount}) async {
     Bucket? bucket = await bucketsRepository.getById(id);
     if (bucket != null && amount != null) {
       bucket.amount = amount;

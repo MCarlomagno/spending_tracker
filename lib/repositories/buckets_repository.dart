@@ -1,43 +1,36 @@
-import 'package:spending_tracker/db/database.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
-import 'package:sqflite/sqflite.dart';
-import '../setup.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class BucketsRepository {
-  Future<int?> create(Bucket bucket) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.insert("Bucket", bucket.toMap());
-    return res;
+  CollectionReference buckets =
+      FirebaseFirestore.instance.collection('buckets');
+
+  Future<String> create(Bucket bucket) async {
+    DocumentReference<Object?> result = await buckets.add(bucket.toMap());
+    return result.id;
   }
 
-  Future<Bucket?> getById(int id) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.query("Bucket", where: 'id = ?', whereArgs: [id]);
-    return Bucket.fromMap(res![0]);
+  Future<Bucket?> getById(String id) async {
+    DocumentReference<Object?> ref = buckets.doc(id);
+    DocumentSnapshot<Object?> result = await ref.get();
+    return Bucket.fromMap(result.data() as Map<String, dynamic>, result.id);
   }
 
   Future<List<Bucket>> getAll() async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.query("Bucket");
-    var allBuckets =
-        res?.map((e) => Bucket.fromMap(e)).toList().reversed.toList();
-    return allBuckets ?? [];
+    QuerySnapshot<Object?> query = await buckets.get();
+    var allBuckets = query.docs
+        .map((e) => Bucket.fromMap(e.data() as Map<String, dynamic>, e.id))
+        .toList()
+        .reversed
+        .toList();
+    return allBuckets;
   }
 
-  Future<void> updateById(int id, Bucket bucket) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    await db
-        ?.update("Bucket", bucket.toMap(), where: 'id = ?', whereArgs: [id]);
+  Future<void> updateById(String id, Bucket bucket) async {
+    await buckets.doc(id).set(bucket.toMap());
   }
 
-  Future<int?> deleteById(int id) async {
-    final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
-    Database? db = await dbProvider.database;
-    var res = await db?.delete("Bucket", where: 'id = ?', whereArgs: [id]);
-    return res;
+  Future<int?> deleteById(String id) async {
+    await buckets.doc(id).delete();
   }
 }

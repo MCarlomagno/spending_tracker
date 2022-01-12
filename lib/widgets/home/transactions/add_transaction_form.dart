@@ -46,7 +46,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     });
   }
 
-  _onBucketSelected(int? value) {
+  _onBucketSelected(String? value) {
     selectedBucket =
         bucketOptions.firstWhere((b) => b.value == value);
     print(selectedBucket!.label);
