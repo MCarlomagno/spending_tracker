@@ -1,16 +1,16 @@
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/repositories/transactions_repository.dart';
 
-class PaymentsService {
+class TransactionsService {
   var transactionsRepository = new TransactionsRepository();
 
-  create({required Payment payment}) async {
-    await transactionsRepository.create(payment);
+  create({required Transaction transaction}) async {
+    await transactionsRepository.create(transaction);
   }
 
-  Future<List<Payment>> getAll() async {
-    List<Payment> allPayments = await transactionsRepository.getAll();
-    return allPayments;
+  Future<List<Transaction>> getAll() async {
+    List<Transaction> allTransactions = await transactionsRepository.getAll();
+    return allTransactions;
   }
 
   Future<void> deleteAll() async {
@@ -22,10 +22,10 @@ class PaymentsService {
   }
 
   Future<void> patchById(int id, {String? detail}) async {
-    Payment? payment = await transactionsRepository.getById(id);
-    if (payment != null) {
-      payment.detail = detail;
-      await transactionsRepository.updateById(id, payment);
+    Transaction? transaction = await transactionsRepository.getById(id);
+    if (transaction != null) {
+      transaction.detail = detail;
+      await transactionsRepository.updateById(id, transaction);
     }
   }
 }

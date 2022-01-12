@@ -8,7 +8,7 @@ final getIt = GetIt.instance;
 
 void setupServices() {
   getIt.registerLazySingleton<DatabaseProvider>(() => DatabaseProvider());
-  getIt.registerLazySingleton<PaymentsService>(() => PaymentsService());
+  getIt.registerLazySingleton<TransactionsService>(() => TransactionsService());
   getIt.registerLazySingleton<BucketsService>(() => BucketsService());
   getIt.registerLazySingleton<AuthenticationService>(() => AuthenticationService());
 }

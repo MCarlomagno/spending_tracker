@@ -1,18 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/widgets/shared/subtitle.dart';
 
-class PaymentDetail extends StatelessWidget {
-  const PaymentDetail({Key? key, required this.payment}) : super(key: key);
-  final Payment payment;
+class TransactionDetail extends StatelessWidget {
+  const TransactionDetail({Key? key, required this.transaction}) : super(key: key);
+  final Transaction transaction;
 
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
-    String detail = payment.detail.toString();
-    String amount = payment.amount.toStringAsFixed(2);
+    String detail = transaction.detail.toString();
+    String amount = transaction.amount.toStringAsFixed(2);
 
     if (detail.length == 0) {
       detail = 'No detail provided';
@@ -60,7 +60,7 @@ class PaymentDetail extends StatelessWidget {
               ),
               onPressed: () async {
                 await Provider.of<BalanceModel>(context, listen: false)
-                    .deletePaymentById(payment.id!);
+                    .deleteTransactionById(transaction.id!);
                 Navigator.of(context).pop();
               },
               icon: Icon(Icons.delete),

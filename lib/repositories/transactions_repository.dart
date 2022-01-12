@@ -1,22 +1,29 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:spending_tracker/db/database.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/transaction.dart' as model;
 import 'package:sqflite/sqflite.dart';
 import '../setup.dart';
 
 class TransactionsRepository {
-  Future<int?> create(Payment payment) async {
+  CollectionReference transactions =
+      FirebaseFirestore.instance.collection('transactions');
+
+  Future<int?> create(model.Transaction transactin) async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
-    var res = await db?.insert("Payments", payment.toMap());
+    var res = await db?.insert("Payments", transactin.toMap());
     return res;
   }
 
-  Future<List<Payment>> getAll() async {
+  Future<List<model.Transaction>> getAll() async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.query("Payments");
-    var allPayments =
-        res?.map((e) => Payment.fromMap(e)).toList().reversed.toList();
+    var allPayments = res
+        ?.map((e) => model.Transaction.fromMap(e))
+        .toList()
+        .reversed
+        .toList();
     return allPayments ?? [];
   }
 
@@ -34,17 +41,17 @@ class TransactionsRepository {
     return res;
   }
 
-  Future<Payment?> getById(int id) async {
+  Future<model.Transaction?> getById(int id) async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
     var res = await db?.query("Payments", where: 'id = ?', whereArgs: [id]);
-    return Payment.fromMap(res![0]);
+    return model.Transaction.fromMap(res![0]);
   }
 
-  Future<void> updateById(int id, Payment payment) async {
+  Future<void> updateById(int id, model.Transaction payment) async {
     final DatabaseProvider dbProvider = getIt.get<DatabaseProvider>();
     Database? db = await dbProvider.database;
-    await db?.update("Payments", payment.toMap(),
-        where: 'id = ?', whereArgs: [id]);
+    await db
+        ?.update("Payments", payment.toMap(), where: 'id = ?', whereArgs: [id]);
   }
 }

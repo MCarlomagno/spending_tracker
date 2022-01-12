@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
@@ -19,7 +19,7 @@ class AddTransactionForm extends StatefulWidget {
 }
 
 class _AddTransactionFormState extends State<AddTransactionForm> {
-  final _paymentsService = getIt.get<PaymentsService>();
+  final _transactionService = getIt.get<TransactionsService>();
   final _bucketsService = getIt.get<BucketsService>();
 
   final TextEditingController _amountController = new TextEditingController();
@@ -47,8 +47,7 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   }
 
   _onBucketSelected(String? value) {
-    selectedBucket =
-        bucketOptions.firstWhere((b) => b.value == value);
+    selectedBucket = bucketOptions.firstWhere((b) => b.value == value);
     print(selectedBucket!.label);
   }
 
@@ -153,10 +152,11 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
     var detail = this._detailController.text;
     var date = DateTime.now();
 
-    var payment = new Payment(amount: amount, date: date, detail: detail);
+    var transaction =
+        new Transaction(amount: amount, date: date, detail: detail);
 
-    await _paymentsService.create(payment: payment);
-    await Provider.of<BalanceModel>(context, listen: false).loadAllPayments();
+    await _transactionService.create(transaction: transaction);
+    await Provider.of<BalanceModel>(context, listen: false).loadAllTransactions();
 
     if (selectedBucket != null) {
       await _bucketsService.changeAmount(selectedBucket!.value, amount: amount);
