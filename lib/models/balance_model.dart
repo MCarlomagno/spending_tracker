@@ -2,25 +2,25 @@ import 'dart:collection';
 
 import 'package:flutter/foundation.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
 
 class BalanceModel extends ChangeNotifier {
   final _bucketsService = getIt.get<BucketsService>();
-  final _paymentsService = getIt.get<PaymentsService>();
+  final _transactionsService = getIt.get<TransactionsService>();
 
   List<Bucket> _buckets = [];
-  List<Payment> _payments = [];
+  List<Transaction> _transactions = [];
 
   bool _loadingBuckets = false;
   UnmodifiableListView<Bucket> get buckets => UnmodifiableListView(_buckets);
   bool get loadingBuckets => _loadingBuckets;
 
-  bool _loadingPayments = false;
-  UnmodifiableListView<Payment> get payments => UnmodifiableListView(_payments);
-  bool get loadingPayments => _loadingPayments;
+  bool _loadingTransactions = false;
+  UnmodifiableListView<Transaction> get transactions => UnmodifiableListView(_transactions);
+  bool get loadingTransactions => _loadingTransactions;
 
   List<String> currencies = ['\$', 'AR\$', '€'];
 
@@ -60,35 +60,35 @@ class BalanceModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  setLoadingPayments(bool loading) {
-    _loadingPayments = loading;
+  setLoadingTransactions(bool loading) {
+    _loadingTransactions = loading;
   }
 
-  void addPayment(Payment payment) {
-    _payments.add(payment);
+  void addTransaction(Transaction transaction) {
+    _transactions.add(transaction);
     notifyListeners();
   }
 
-  Future<void> loadAllPayments() async {
-    setLoadingPayments(true);
-    this._payments = await _paymentsService.getAll();
-    setLoadingPayments(false);
+  Future<void> loadAllTransactions() async {
+    setLoadingTransactions(true);
+    _transactions = await _transactionsService.getAll();
+    setLoadingTransactions(false);
     notifyListeners();
   }
 
-  Future<void> deletePaymentById(int id) async {
-    setLoadingPayments(true);
-    await this._paymentsService.deleteById(id);
-    await this.loadAllPayments();
-    setLoadingPayments(false);
+  Future<void> deleteTransactionById(int id) async {
+    setLoadingTransactions(true);
+    await _transactionsService.deleteById(id);
+    await loadAllTransactions();
+    setLoadingTransactions(false);
     notifyListeners();
   }
 
-  Future<void> deleteAllPayments() async {
-    setLoadingPayments(true);
-    await this._paymentsService.deleteAll();
-    await this.loadAllPayments();
-    setLoadingPayments(false);
+  Future<void> deleteAllTransactions() async {
+    setLoadingTransactions(true);
+    await _transactionsService.deleteAll();
+    await loadAllTransactions();
+    setLoadingTransactions(false);
     notifyListeners();
   }
 }

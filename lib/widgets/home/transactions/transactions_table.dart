@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:spending_tracker/interfaces/payment.dart';
+import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
-import 'package:spending_tracker/utils/utils.dart';
-import 'package:spending_tracker/widgets/home/transactions/payment_detail.dart';
+import 'package:spending_tracker/widgets/home/transactions/transaction_detail.dart';
 import '../../../setup.dart';
 
 class TransactionsTable extends StatefulWidget {
@@ -13,16 +12,16 @@ class TransactionsTable extends StatefulWidget {
 }
 
 class _TransactionsTableState extends State<TransactionsTable> {
-  final _paymentsService = getIt.get<PaymentsService>();
+  final _transactionsService = getIt.get<TransactionsService>();
 
   @override
   void initState() {
     super.initState();
-    _loadPayments();
+    _loadTransactions();
   }
 
-  _loadPayments() async {
-    Provider.of<BalanceModel>(context, listen: false).loadAllPayments();
+  _loadTransactions() async {
+    Provider.of<BalanceModel>(context, listen: false).loadAllTransactions();
   }
 
   @override
@@ -30,7 +29,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
     var tableHeight = MediaQuery.of(context).size.height * 0.4;
     var tableWidth = MediaQuery.of(context).size.width;
     return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
-      List<Payment> transactions = balanceModel.payments;
+      List<Transaction> transactions = balanceModel.transactions;
 
       return Container(
         height: tableHeight,
@@ -56,7 +55,7 @@ class _TransactionsTableState extends State<TransactionsTable> {
                   style: TextStyle(fontWeight: FontWeight.bold),
                 )),
               ],
-              rows: transactions.map<DataRow>((Payment payment) {
+              rows: transactions.map<DataRow>((Transaction transaction) {
                 return DataRow(
                   onSelectChanged: (val) {
                     final balanceModel =
@@ -67,31 +66,31 @@ class _TransactionsTableState extends State<TransactionsTable> {
                         builder: (BuildContext context) {
                           return ListenableProvider.value(
                             value: balanceModel,
-                            child: PaymentDetail(payment: payment),
+                            child: TransactionDetail(transaction: transaction),
                           );
                         });
                   },
                   cells: <DataCell>[
                     DataCell(
                       Text(
-                        this._dateTimeFormatString(payment.date),
+                        this._dateTimeFormatString(transaction.date),
                       ),
                     ),
                     DataCell(
                       TextFormField(
                         controller: TextEditingController(
-                            text: payment.detail ?? "no detail"),
+                            text: transaction.detail ?? "no detail"),
                         onFieldSubmitted: (val) async {
-                          await _paymentsService.patchById(payment.id ?? 0,
+                          await _transactionsService.patchById(transaction.id ?? 0,
                               detail: val);
-                          await balanceModel.loadAllPayments();
+                          await balanceModel.loadAllTransactions();
                         },
                       ),
                     ),
                     DataCell(
                       Container(
                         child: Text(
-                          payment.amount.toStringAsFixed(0),
+                          transaction.amount.toStringAsFixed(0),
                         ),
                       ),
                     ),
