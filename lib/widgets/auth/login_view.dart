@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
 import 'package:spending_tracker/widgets/shared/app_button.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/circular_progress_button.dart';
 import 'package:spending_tracker/widgets/shared/error_message.dart';
 import '../../setup.dart';
 
@@ -21,12 +23,27 @@ class _LoginViewState extends State<LoginView> {
 
   bool _loading = false;
   bool _errored = false;
-  String? errorMsg = "";
-
   bool _showPassword = false;
+  String? _errorMsg = "";
 
-  _togglePasswordVisibility() {
-    setState(() => _showPassword = !_showPassword);
+  _togglePasswordVisibility() => setState(() => _showPassword = !_showPassword);
+
+  _navigateToHome() => Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (context) => MyHomePage()),
+      );
+
+  _login() async => _authenticationService.loginWithEmail(
+      email: _emailController.text, password: _passwordController.text);
+
+  _handleError(e) {
+    print(e);
+    if (e is FirebaseAuthException) {
+      setState(() {
+        _loading = false;
+        _errored = true;
+        _errorMsg = e.message;
+      });
+    }
   }
 
   _onSubmit() async {
@@ -35,77 +52,72 @@ class _LoginViewState extends State<LoginView> {
       _errored = false;
     });
     try {
-      await _authenticationService.loginWithEmail(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
+      await _login();
       setState(() => _loading = false);
-      Navigator.of(context).pushReplacement(
-        MaterialPageRoute(
-          builder: (context) => MyHomePage(),
-        ),
-      );
+      _navigateToHome();
     } catch (e) {
-      print(e);
-      if (e is FirebaseAuthException) {
-        setState(() {
-          _loading = false;
-          _errored = true;
-          errorMsg = e.message;
-        });
-      }
+      _handleError(e);
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    Icon passwordInputSuffix = Icon(Icons.visibility);
+    if (_showPassword) {
+      passwordInputSuffix = Icon(Icons.visibility_off);
+    }
+
+    Function()? onPressed = _onSubmit;
+    Widget appButtonChild = Text('Log in');
+    if (_loading) {
+      appButtonChild = CircularProgressButton();
+      onPressed = null;
+    }
+
+    double currentWidth = MediaQuery.of(context).size.width;
+    double? _inputMaxWidth;
+    if (currentWidth > Dimensions.m) {
+      _inputMaxWidth = Dimensions.xs;
+    }
+
+    EdgeInsetsGeometry _inputMargin = EdgeInsets.all(10);
+    EdgeInsetsGeometry _zeroPadding = EdgeInsets.all(0);
+
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           AppTextField(
-            margin: EdgeInsets.all(10),
+            maxWidth: _inputMaxWidth,
+            margin: _inputMargin.add(EdgeInsets.only(top: 20)),
             controller: _emailController,
             labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
           ),
           AppTextField(
-            margin: EdgeInsets.all(10),
+            maxWidth: _inputMaxWidth,
+            margin: _inputMargin,
             controller: _passwordController,
             labelText: 'Password',
-            obscureText: _showPassword,
-            suffix: _showPassword
-                ? IconButton(
-                    padding: EdgeInsets.all(0),
-                    splashRadius: 1,
-                    icon: Icon(Icons.visibility),
-                    onPressed: _togglePasswordVisibility,
-                  )
-                : IconButton(
-                    padding: EdgeInsets.all(0),
-                    splashRadius: 1,
-                    icon: Icon(Icons.visibility_off),
-                    onPressed: _togglePasswordVisibility,
-                  ),
+            obscureText: !_showPassword,
+            suffix: IconButton(
+              padding: _zeroPadding,
+              splashRadius: 1,
+              icon: passwordInputSuffix,
+              onPressed: _togglePasswordVisibility,
+            ),
           ),
           Visibility(
             child: ErrorMessage(
-              message: errorMsg,
+              message: _errorMsg,
             ),
             visible: _errored,
           ),
           AppButton(
-            margin: EdgeInsets.all(10),
-            child: _loading
-                ? SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  )
-                : Text('Log in'),
-            onPressed: _loading ? null : _onSubmit,
+            maxWidth: _inputMaxWidth,
+            margin: _inputMargin,
+            child: appButtonChild,
+            onPressed: onPressed,
           ),
         ],
       ),

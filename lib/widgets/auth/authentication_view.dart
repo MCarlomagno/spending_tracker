@@ -12,32 +12,38 @@ class AuthenticationView extends StatefulWidget {
 class _AuthenticationViewState extends State<AuthenticationView> {
   @override
   Widget build(BuildContext context) {
+    Widget body = const TabBarView(
+      children: [
+        LoginView(),
+        SignupView(),
+      ],
+    );
+
+    TabBar tabBar = TabBar(
+      indicatorColor: Colors.white,
+      tabs: [
+        Tab(
+          icon: Icon(Icons.login),
+          text: 'Log In',
+        ),
+        Tab(
+          icon: Icon(Icons.add_reaction_outlined),
+          text: 'Sign Up',
+        ),
+      ],
+    );
+
+    AppBar appBar = AppBar(
+      backgroundColor: Color(0xFF5BC8AA),
+      bottom: tabBar,
+      title: const Text('Spending tracker'),
+    );
+
     return DefaultTabController(
-      length: 2,
+      length: tabBar.tabs.length,
       child: Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xFF5BC8AA),
-          bottom: TabBar(
-            indicatorColor: Colors.white,
-            tabs: [
-              Tab(
-                icon: Icon(Icons.login),
-                text: 'Log In',
-              ),
-              Tab(
-                icon: Icon(Icons.add_reaction_outlined),
-                text: 'Sign Up',
-              ),
-            ],
-          ),
-          title: const Text('Spending tracker'),
-        ),
-        body: const TabBarView(
-          children: [
-            LoginView(),
-            SignupView(),
-          ],
-        ),
+        appBar: appBar,
+        body: body,
       ),
     );
   }
