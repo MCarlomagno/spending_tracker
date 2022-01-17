@@ -1,9 +1,11 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/widgets/home/home.dart';
 import 'package:spending_tracker/widgets/shared/app_button.dart';
 import 'package:spending_tracker/widgets/shared/app_text_field.dart';
+import 'package:spending_tracker/widgets/shared/circular_progress_button.dart';
 import 'package:spending_tracker/widgets/shared/error_message.dart';
 import '../../setup.dart';
 
@@ -61,37 +63,54 @@ class _SignupViewState extends State<SignupView> {
 
   @override
   Widget build(BuildContext context) {
+    Icon passwordInputSuffix = Icon(Icons.visibility);
+    if (_showPassword) {
+      passwordInputSuffix = Icon(Icons.visibility_off);
+    }
+
+    EdgeInsetsGeometry _inputMargin = EdgeInsets.all(10);
+    EdgeInsetsGeometry _zeroPadding = EdgeInsets.all(0);
+
+    Function()? onPressed = _onSubmit;
+    Widget appButtonChild = Text('Create account');
+    if (_loading) {
+      appButtonChild = CircularProgressButton();
+      onPressed = null;
+    }
+
+    double currentWidth = MediaQuery.of(context).size.width;
+    double? _inputMaxWidth;
+    if (currentWidth > Dimensions.m) {
+      _inputMaxWidth = Dimensions.xs;
+    }
+
     return SingleChildScrollView(
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
           AppTextField(
-            margin: EdgeInsets.all(10),
+            maxWidth: _inputMaxWidth,
+            margin: _inputMargin,
             controller: _emailController,
             labelText: 'Email',
             keyboardType: TextInputType.emailAddress,
           ),
           AppTextField(
-            margin: EdgeInsets.all(10),
+            maxWidth: _inputMaxWidth,
+            margin: _inputMargin,
             controller: _passwordController,
             labelText: 'Password',
-            obscureText: _showPassword,
-            suffix: _showPassword
-                ? IconButton(
-                    padding: EdgeInsets.all(0),
-                    splashRadius: 1,
-                    icon: Icon(Icons.visibility),
-                    onPressed: _togglePasswordVisibility,
-                  )
-                : IconButton(
-                    padding: EdgeInsets.all(0),
-                    splashRadius: 1,
-                    icon: Icon(Icons.visibility_off),
-                    onPressed: _togglePasswordVisibility,
-                  ),
+            obscureText: !_showPassword,
+            suffix: IconButton(
+              padding: _zeroPadding,
+              splashRadius: 1,
+              icon: passwordInputSuffix,
+              onPressed: _togglePasswordVisibility,
+            ),
           ),
           AppTextField(
-            margin: EdgeInsets.all(10),
+            maxWidth: _inputMaxWidth,
+            margin: _inputMargin,
             controller: _nameController,
             labelText: 'Name (Optional)',
           ),
@@ -102,17 +121,10 @@ class _SignupViewState extends State<SignupView> {
             visible: _errored,
           ),
           AppButton(
+            maxWidth: _inputMaxWidth,
             margin: EdgeInsets.all(10),
-            child: _loading
-                ? SizedBox(
-                    height: 20,
-                    width: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
-                  )
-                : Text('Create account'),
-            onPressed: _loading ? null : _onSubmit,
+            child: appButtonChild,
+            onPressed: onPressed,
           ),
         ],
       ),
