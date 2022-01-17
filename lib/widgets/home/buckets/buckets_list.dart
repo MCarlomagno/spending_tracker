@@ -40,8 +40,9 @@ class _BucketsListState extends State<BucketsList> {
 
   @override
   Widget build(BuildContext context) {
-    var width = MediaQuery.of(context).size.width * 0.9;
-    var height = 150.0;
+    double width = MediaQuery.of(context).size.width * 0.9;
+    double height = 150.0;
+    double maxWidth = 800.0;
 
     return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
       List<Bucket> buckets = balanceModel.buckets;
@@ -49,6 +50,9 @@ class _BucketsListState extends State<BucketsList> {
       return Container(
         width: width,
         height: height,
+        constraints: BoxConstraints(
+          maxWidth: maxWidth,
+        ),
         child: ListView(
           scrollDirection: Axis.horizontal,
           children: [
