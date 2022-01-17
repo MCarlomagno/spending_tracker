@@ -33,12 +33,14 @@ class BucketItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var itemWidth = MediaQuery.of(context).size.width / 4;
+
+    double size = 150.0;
+
     return InkWell(
       onTap: () => {_onBucketPressed(context)},
       child: Container(
-        height: 150.0,
-        width: itemWidth,
+        height: size,
+        width: size,
         margin: EdgeInsets.only(right: 10),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),

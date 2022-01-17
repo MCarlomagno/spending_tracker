@@ -26,77 +26,83 @@ class _TransactionsTableState extends State<TransactionsTable> {
 
   @override
   Widget build(BuildContext context) {
-    var tableHeight = MediaQuery.of(context).size.height * 0.4;
-    var tableWidth = MediaQuery.of(context).size.width;
+    double maxWidth = 800.0;
+    double containerWidth = MediaQuery.of(context).size.width;
+    double containerHeight = MediaQuery.of(context).size.height * 0.4;
     return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
       List<Transaction> transactions = balanceModel.transactions;
 
-      return Container(
-        height: tableHeight,
-        width: tableWidth,
-        child: SingleChildScrollView(
-          scrollDirection: Axis.vertical,
-          child: DataTable(
-              showCheckboxColumn: false,
-              columns: [
-                DataColumn(
-                    label: Text(
-                  "Date",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
-                DataColumn(
-                    label: Text(
-                  "Detail",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
-                DataColumn(
-                    label: Text(
-                  "Amount",
-                  style: TextStyle(fontWeight: FontWeight.bold),
-                )),
-              ],
-              rows: transactions.map<DataRow>((Transaction transaction) {
-                return DataRow(
-                  onSelectChanged: (val) {
-                    final balanceModel =
-                        Provider.of<BalanceModel>(context, listen: false);
-                    showModalBottomSheet(
-                        backgroundColor: Theme.of(context).backgroundColor,
-                        context: context,
-                        builder: (BuildContext context) {
-                          return ListenableProvider.value(
-                            value: balanceModel,
-                            child: TransactionDetail(transaction: transaction),
-                          );
-                        });
-                  },
-                  cells: <DataCell>[
-                    DataCell(
-                      Text(
-                        this._dateTimeFormatString(transaction.date),
-                      ),
-                    ),
-                    DataCell(
-                      TextFormField(
-                        controller: TextEditingController(
-                            text: transaction.detail ?? "no detail"),
-                        onFieldSubmitted: (val) async {
-                          await _transactionsService.patchById(transaction.id!,
-                              detail: val);
-                          await balanceModel.loadAllTransactions();
-                        },
-                      ),
-                    ),
-                    DataCell(
-                      Container(
-                        child: Text(
-                          transaction.amount.toStringAsFixed(0),
+      return Center(
+        child: Container(
+          height: containerHeight,
+          width: containerWidth,
+          constraints: BoxConstraints(
+            maxWidth: maxWidth,
+          ),
+          child: SingleChildScrollView(
+            scrollDirection: Axis.vertical,
+            child: DataTable(
+                showCheckboxColumn: false,
+                columns: [
+                  DataColumn(
+                      label: Text(
+                    "Date",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  DataColumn(
+                      label: Text(
+                    "Detail",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                  DataColumn(
+                      label: Text(
+                    "Amount",
+                    style: TextStyle(fontWeight: FontWeight.bold),
+                  )),
+                ],
+                rows: transactions.map<DataRow>((Transaction transaction) {
+                  return DataRow(
+                    onSelectChanged: (val) {
+                      final balanceModel =
+                          Provider.of<BalanceModel>(context, listen: false);
+                      showModalBottomSheet(
+                          backgroundColor: Theme.of(context).backgroundColor,
+                          context: context,
+                          builder: (BuildContext context) {
+                            return ListenableProvider.value(
+                              value: balanceModel,
+                              child: TransactionDetail(transaction: transaction),
+                            );
+                          });
+                    },
+                    cells: <DataCell>[
+                      DataCell(
+                        Text(
+                          this._dateTimeFormatString(transaction.date),
                         ),
                       ),
-                    ),
-                  ],
-                );
-              }).toList()),
+                      DataCell(
+                        TextFormField(
+                          controller: TextEditingController(
+                              text: transaction.detail ?? "no detail"),
+                          onFieldSubmitted: (val) async {
+                            await _transactionsService.patchById(transaction.id!,
+                                detail: val);
+                            await balanceModel.loadAllTransactions();
+                          },
+                        ),
+                      ),
+                      DataCell(
+                        Container(
+                          child: Text(
+                            transaction.amount.toStringAsFixed(0),
+                          ),
+                        ),
+                      ),
+                    ],
+                  );
+                }).toList()),
+          ),
         ),
       );
     });

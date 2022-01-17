@@ -19,6 +19,8 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     var contentMarginVertical = 20.0;
+    double maxWidth = 800.0;
+
     return MultiProvider(
       providers: [
         ChangeNotifierProvider<BalanceModel>(
@@ -29,39 +31,44 @@ class _MyHomePageState extends State<MyHomePage> {
         return Scaffold(
           appBar: HomeAppBar(),
           body: SizedBox.expand(
-            child: Container(
-              alignment: Alignment.topCenter,
-              child: SingleChildScrollView(
-                padding: EdgeInsets.zero,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    SizedBox(
-                      height: contentMarginVertical,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Subtitle(text: "Buckets"),
-                    ),
-                    SizedBox(
-                      height: contentMarginVertical,
-                    ),
-                    Align(
-                      alignment: Alignment.center,
-                      child: BucketsList(),
-                    ),
-                    SizedBox(
-                      height: contentMarginVertical,
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 20),
-                      child: Subtitle(text: "Transactions"),
-                    ),
-                    SizedBox(
-                      height: contentMarginVertical,
-                    ),
-                    TransactionsTable(),
-                  ],
+            child: Center(
+              child: Container(
+                alignment: Alignment.topCenter,
+                constraints: BoxConstraints(
+                  maxWidth: maxWidth,
+                ),
+                child: SingleChildScrollView(
+                  padding: EdgeInsets.zero,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      SizedBox(
+                        height: contentMarginVertical,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Subtitle(text: "Buckets"),
+                      ),
+                      SizedBox(
+                        height: contentMarginVertical,
+                      ),
+                      Align(
+                        alignment: Alignment.center,
+                        child: BucketsList(),
+                      ),
+                      SizedBox(
+                        height: contentMarginVertical,
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        child: Subtitle(text: "Transactions"),
+                      ),
+                      SizedBox(
+                        height: contentMarginVertical,
+                      ),
+                      TransactionsTable(),
+                    ],
+                  ),
                 ),
               ),
             ),

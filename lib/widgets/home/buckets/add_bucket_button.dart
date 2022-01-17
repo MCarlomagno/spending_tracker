@@ -6,15 +6,17 @@ class AddBucketButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var itemWidth = MediaQuery.of(context).size.width / 4;
+
+    double size = 150.0;
+
     return Container(
       decoration: BoxDecoration(
         border: Border.all(width: 2),
         borderRadius: BorderRadius.circular(20),
       ),
       margin: EdgeInsets.only(right: 10),
-      height: 150.0,
-      width: itemWidth,
+      height: size,
+      width: size,
       child: IconButton(
         icon: Icon(Icons.add_circle_outline_outlined),
         onPressed: onPressed,
