@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/models/balance_model.dart';
+import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
 import 'package:spending_tracker/setup.dart';
 import 'package:spending_tracker/widgets/shared/app_select_field.dart';
@@ -16,6 +17,7 @@ class AddBucketForm extends StatefulWidget {
 
 class _AddBucketFormState extends State<AddBucketForm> {
   final _bucketsService = getIt.get<BucketsService>();
+  final _authenticationService = getIt.get<AuthenticationService>();
 
   final TextEditingController _amountController = new TextEditingController();
   final TextEditingController _nameController = new TextEditingController();
@@ -104,8 +106,14 @@ class _AddBucketFormState extends State<AddBucketForm> {
     var amount = double.parse(this._amountController.text);
     var name = this._nameController.text;
     var currency = this._currencyController.text;
+    String uid = this._authenticationService.currentUser!.uid;
 
-    var bucket = new Bucket(amount: amount, name: name, currency: currency);
+    var bucket = new Bucket(
+      amount: amount,
+      name: name,
+      currency: currency,
+      uid: uid,
+    );
     await _bucketsService.create(bucket: bucket);
 
     await Provider.of<BalanceModel>(context, listen: false).loadAllBuckets();
