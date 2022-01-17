@@ -1,15 +1,20 @@
 import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/repositories/transactions_repository.dart';
+import 'package:spending_tracker/services/authentication_service.dart';
+import 'package:spending_tracker/setup.dart';
 
 class TransactionsService {
   var transactionsRepository = new TransactionsRepository();
+  var _authenticationService = getIt.get<AuthenticationService>();
 
   create({required Transaction transaction}) async {
     await transactionsRepository.create(transaction);
   }
 
   Future<List<Transaction>> getAll() async {
-    List<Transaction> allTransactions = await transactionsRepository.getAll();
+    String uid = _authenticationService.currentUser!.uid;
+    List<Transaction> allTransactions =
+        await transactionsRepository.getAll(uid: uid);
     return allTransactions;
   }
 

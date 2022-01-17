@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/models/balance_model.dart';
+import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/services/bukets_service.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
 import 'package:spending_tracker/setup.dart';
@@ -20,6 +21,7 @@ class AddTransactionForm extends StatefulWidget {
 
 class _AddTransactionFormState extends State<AddTransactionForm> {
   final _transactionService = getIt.get<TransactionsService>();
+  final _authenticationService = getIt.get<AuthenticationService>();
   final _bucketsService = getIt.get<BucketsService>();
 
   final TextEditingController _amountController = new TextEditingController();
@@ -151,9 +153,10 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
 
     var detail = this._detailController.text;
     var date = DateTime.now();
+    String uid = _authenticationService.currentUser!.uid;
 
     var transaction =
-        new Transaction(amount: amount, date: date, detail: detail);
+        new Transaction(amount: amount, date: date, detail: detail, uid: uid);
 
     await _transactionService.create(transaction: transaction);
     await Provider.of<BalanceModel>(context, listen: false).loadAllTransactions();

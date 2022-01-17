@@ -18,8 +18,9 @@ class TransactionsRepository {
         result.data() as Map<String, dynamic>, result.id);
   }
 
-  Future<List<model.Transaction>> getAll() async {
-    QuerySnapshot<Object?> query = await transactions.get();
+  Future<List<model.Transaction>> getAll({required String uid}) async {
+    QuerySnapshot<Object?> query =
+        await transactions.where('uid', isEqualTo: uid).get();
     var allBuckets = query.docs
         .map((e) =>
             model.Transaction.fromMap(e.data() as Map<String, dynamic>, e.id))

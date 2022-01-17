@@ -16,8 +16,9 @@ class BucketsRepository {
     return Bucket.fromMap(result.data() as Map<String, dynamic>, result.id);
   }
 
-  Future<List<Bucket>> getAll() async {
-    QuerySnapshot<Object?> query = await buckets.get();
+  Future<List<Bucket>> getAll({required String uid}) async {
+    QuerySnapshot<Object?> query =
+        await buckets.where('uid', isEqualTo: uid).get();
     var allBuckets = query.docs
         .map((e) => Bucket.fromMap(e.data() as Map<String, dynamic>, e.id))
         .toList()
