@@ -1,7 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/services/authentication_service.dart';
 import 'package:spending_tracker/widgets/shared/app_button.dart';
+import 'package:spending_tracker/widgets/shared/app_text_field.dart';
 import '../../setup.dart';
 
 class SettingsPage extends StatefulWidget {
@@ -47,40 +49,54 @@ class _SettingsPageState extends State<SettingsPage> {
 
   @override
   Widget build(BuildContext context) {
+    double currentWidth = MediaQuery.of(context).size.width;
+    double? _inputMaxWidth;
+    if (currentWidth > Dimensions.m) {
+      _inputMaxWidth = Dimensions.xs;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text('Settings'),
         backgroundColor: Colors.blueGrey,
       ),
-      body: ListView(
-        padding: EdgeInsets.only(top: 20, left: 20, right: 20),
-        children: [
-          TextField(
-            controller: _controller,
-            maxLines: 1,
-            decoration: InputDecoration(
-              label: Text('Name'),
-              hintMaxLines: 20,
-              suffixIcon: IconButton(
-                icon: Icon(Icons.close),
-                onPressed: _clearInput,
-              ),
-            ),
+      body: Align(
+        alignment: Alignment.center,
+        child: Container(
+          constraints: BoxConstraints(
+            maxWidth: _inputMaxWidth ?? double.infinity,
           ),
-          AppButton(
-            child: !isLoading
-                ? Text('Save')
-                : SizedBox(
-                    width: 20,
-                    height: 20,
-                    child: CircularProgressIndicator(
-                      strokeWidth: 2,
-                    ),
+          child: ListView(
+            padding: EdgeInsets.only(top: 20, left: 20, right: 20),
+            children: [
+              TextField(
+                controller: _controller,
+                maxLines: 1,
+                decoration: InputDecoration(
+                  label: Text('Name'),
+                  hintMaxLines: 20,
+                  suffixIcon: IconButton(
+                    icon: Icon(Icons.close),
+                    onPressed: _clearInput,
                   ),
-            onPressed: isLoading ? null : _onSave,
-            margin: EdgeInsets.only(top: 20),
+                ),
+              ),
+              AppButton(
+                maxWidth: _inputMaxWidth,
+                child: !isLoading
+                    ? Text('Save')
+                    : SizedBox(
+                        width: 20,
+                        height: 20,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                        ),
+                      ),
+                onPressed: isLoading ? null : _onSave,
+                margin: EdgeInsets.only(top: 20),
+              ),
+            ],
           ),
-        ],
+        ),
       ),
     );
   }
