@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/models/balance_model.dart';
@@ -56,82 +57,103 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
   @override
   Widget build(BuildContext context) {
     return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
-      List<Bucket> buckets = balanceModel.buckets;
+      double width = MediaQuery.of(context).size.width;
+      double height = MediaQuery.of(context).size.height;
+      double maxWidth = 400.0;
 
+      bool isMobile = width < Dimensions.m;
+
+      List<Bucket> buckets = balanceModel.buckets;
       bucketOptions = buckets
           .map((b) => AppSelectOption(value: b.id!, label: b.name!))
           .toList();
 
-      return Container(
-        height: MediaQuery.of(context).size.height,
-        padding: EdgeInsets.symmetric(horizontal: 30),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SizedBox(height: 30),
-            Subtitle(
-              text: "New Transaction",
+      return Center(
+        child: Card(
+          child: Container(
+            constraints: BoxConstraints(
+              maxWidth: maxWidth,
             ),
-            SizedBox(height: 10),
-            AppTextField(
-              labelText: "Amount",
-              keyboardType: TextInputType.number,
-              controller: _amountController,
-              autofocus: true,
-            ),
-            SizedBox(height: 10),
-            ToggleButtons(
+            height: isMobile ? height : null,
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisSize: MainAxisSize.min,
               children: [
-                Container(
-                  child: Text(
-                    'Income',
-                    textAlign: TextAlign.center,
-                  ),
-                  width: 100,
+                SizedBox(height: 30),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Subtitle(
+                      text: "New Transaction",
+                    ),
+                    IconButton(
+                      icon: Icon(Icons.close),
+                      onPressed: () => Navigator.of(context).pop(),
+                    ),
+                  ],
                 ),
-                Container(
-                  child: Text(
-                    'Expense',
-                    textAlign: TextAlign.center,
+                SizedBox(height: 20),
+                AppTextField(
+                  labelText: "Amount",
+                  keyboardType: TextInputType.number,
+                  controller: _amountController,
+                  autofocus: true,
+                ),
+                SizedBox(height: 10),
+                ToggleButtons(
+                  children: [
+                    Container(
+                      child: Text(
+                        'Income',
+                        textAlign: TextAlign.center,
+                      ),
+                      width: 100,
+                    ),
+                    Container(
+                      child: Text(
+                        'Expense',
+                        textAlign: TextAlign.center,
+                      ),
+                      width: 100,
+                    )
+                  ],
+                  isSelected: _selected,
+                  onPressed: _onTypeSelected,
+                ),
+                SizedBox(height: 10),
+                AppSelectField(
+                  labelText: "Buacket",
+                  items: bucketOptions,
+                  onChanged: _onBucketSelected,
+                ),
+                SizedBox(height: 10),
+                AppTextField(
+                  labelText: "Description",
+                  controller: _detailController,
+                ),
+                SizedBox(height: 20),
+                Padding(
+                  padding: EdgeInsets.only(
+                      bottom: MediaQuery.of(context).viewInsets.bottom),
+                  child: MaterialButton(
+                    height: 50,
+                    minWidth: MediaQuery.of(context).size.width - 60,
+                    color: Color(0xFF5BC8AA),
+                    disabledColor: Colors.grey[400],
+                    onPressed: !loading ? _onConfirmPressed : null,
+                    child: !loading
+                        ? Text(
+                            "Confirm",
+                            style: TextStyle(color: Colors.white),
+                          )
+                        : ButtonProgress(),
                   ),
-                  width: 100,
-                )
+                ),
+                SizedBox(height: 30),
               ],
-              isSelected: _selected,
-              onPressed: _onTypeSelected,
             ),
-            SizedBox(height: 10),
-            AppSelectField(
-              labelText: "Buacket",
-              items: bucketOptions,
-              onChanged: _onBucketSelected,
-            ),
-            SizedBox(height: 10),
-            AppTextField(
-              labelText: "Description",
-              controller: _detailController,
-            ),
-            SizedBox(height: 10),
-            Padding(
-              padding: EdgeInsets.only(
-                  bottom: MediaQuery.of(context).viewInsets.bottom),
-              child: MaterialButton(
-                height: 50,
-                minWidth: MediaQuery.of(context).size.width - 60,
-                color: Color(0xFF5BC8AA),
-                disabledColor: Colors.grey[400],
-                onPressed: !loading ? _onConfirmPressed : null,
-                child: !loading
-                    ? Text(
-                        "Confirm",
-                        style: TextStyle(color: Colors.white),
-                      )
-                    : ButtonProgress(),
-              ),
-            ),
-            SizedBox(height: 30),
-          ],
+          ),
         ),
       );
     });
@@ -159,7 +181,8 @@ class _AddTransactionFormState extends State<AddTransactionForm> {
         new Transaction(amount: amount, date: date, detail: detail, uid: uid);
 
     await _transactionService.create(transaction: transaction);
-    await Provider.of<BalanceModel>(context, listen: false).loadAllTransactions();
+    await Provider.of<BalanceModel>(context, listen: false)
+        .loadAllTransactions();
 
     if (selectedBucket != null) {
       await _bucketsService.changeAmount(selectedBucket!.value, amount: amount);
