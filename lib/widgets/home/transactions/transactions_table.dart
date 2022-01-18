@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/interfaces/transaction.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/services/transactions_service.dart';
@@ -24,11 +25,37 @@ class _TransactionsTableState extends State<TransactionsTable> {
     Provider.of<BalanceModel>(context, listen: false).loadAllTransactions();
   }
 
+  _onSelectChanged({
+    required Transaction transaction,
+    required bool isMobile,
+  }) {
+    final balanceModel = Provider.of<BalanceModel>(context, listen: false);
+
+    Widget child = ListenableProvider.value(
+      value: balanceModel,
+      child: TransactionDetail(transaction: transaction),
+    );
+    if (isMobile) {
+      showModalBottomSheet(
+        backgroundColor: Theme.of(context).backgroundColor,
+        context: context,
+        builder: (BuildContext context) => child,
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => child,
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     double maxWidth = 800.0;
     double containerWidth = MediaQuery.of(context).size.width;
     double containerHeight = MediaQuery.of(context).size.height * 0.4;
+    bool isMobile = containerWidth < Dimensions.m;
+
     return Consumer<BalanceModel>(builder: (context, balanceModel, child) {
       List<Transaction> transactions = balanceModel.transactions;
 
@@ -63,17 +90,8 @@ class _TransactionsTableState extends State<TransactionsTable> {
                 rows: transactions.map<DataRow>((Transaction transaction) {
                   return DataRow(
                     onSelectChanged: (val) {
-                      final balanceModel =
-                          Provider.of<BalanceModel>(context, listen: false);
-                      showModalBottomSheet(
-                          backgroundColor: Theme.of(context).backgroundColor,
-                          context: context,
-                          builder: (BuildContext context) {
-                            return ListenableProvider.value(
-                              value: balanceModel,
-                              child: TransactionDetail(transaction: transaction),
-                            );
-                          });
+                      _onSelectChanged(
+                          transaction: transaction, isMobile: isMobile);
                     },
                     cells: <DataCell>[
                       DataCell(
@@ -86,8 +104,8 @@ class _TransactionsTableState extends State<TransactionsTable> {
                           controller: TextEditingController(
                               text: transaction.detail ?? "no detail"),
                           onFieldSubmitted: (val) async {
-                            await _transactionsService.patchById(transaction.id!,
-                                detail: val);
+                            await _transactionsService
+                                .patchById(transaction.id!, detail: val);
                             await balanceModel.loadAllTransactions();
                           },
                         ),

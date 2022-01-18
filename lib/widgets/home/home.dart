@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'package:spending_tracker/widgets/home/buckets/buckets_list.dart';
 import 'package:spending_tracker/widgets/home/transactions/transactions_table.dart';
@@ -16,10 +17,41 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+
+  _onCreateTransaction({required bool isMobile, required BuildContext context}) {
+    final balanceModel = Provider.of<BalanceModel>(context, listen: false);
+
+    Widget child = ListenableProvider.value(
+      value: balanceModel,
+      child: AddTransactionForm(),
+    );
+
+    if (isMobile) {
+      showModalBottomSheet(
+        isScrollControlled: true,
+        context: context,
+        builder: (BuildContext context) => StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) => child,
+        ),
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => StatefulBuilder(
+          builder: (BuildContext context, StateSetter setState) => child,
+        ),
+      );
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     var contentMarginVertical = 20.0;
     double maxWidth = 800.0;
+
+    double width = MediaQuery.of(context).size.width;
+
+    bool isMobile = width < Dimensions.m;
 
     return MultiProvider(
       providers: [
@@ -90,21 +122,7 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             onPressed: () {
-              final balanceModel =
-                  Provider.of<BalanceModel>(context, listen: false);
-              showModalBottomSheet(
-                  isScrollControlled: true,
-                  context: context,
-                  builder: (BuildContext context) {
-                    return StatefulBuilder(
-                      builder: (BuildContext context, StateSetter setState) {
-                        return ListenableProvider.value(
-                          value: balanceModel,
-                          child: AddTransactionForm(),
-                        );
-                      },
-                    );
-                  });
+              _onCreateTransaction(isMobile: isMobile, context: context);
             },
             backgroundColor: Color(0xFF5BC8AA),
           ),
