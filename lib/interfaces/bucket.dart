@@ -22,7 +22,7 @@ class Bucket {
 
   factory Bucket.fromMap(Map<String, dynamic> json, String id) => new Bucket(
         id: id,
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         name: json["name"],
         currency: json["currency"],
         uid: json['uid'],

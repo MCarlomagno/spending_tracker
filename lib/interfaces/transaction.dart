@@ -24,7 +24,7 @@ class Transaction {
       new Transaction(
         id: id,
         uid: json["uid"],
-        amount: json["amount"],
+        amount: json["amount"].toDouble(),
         date: DateTime.parse(json["date"]),
         detail: json["detail"],
       );
