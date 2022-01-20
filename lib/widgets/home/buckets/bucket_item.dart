@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:spending_tracker/constants/dimensions.dart';
 import 'package:spending_tracker/interfaces/bucket.dart';
 import 'package:spending_tracker/models/balance_model.dart';
 import 'dart:math' as math;
@@ -13,17 +14,29 @@ class BucketItem extends StatelessWidget {
   final Bucket bucket;
   const BucketItem({Key? key, required this.bucket}) : super(key: key);
 
-  _onBucketPressed(BuildContext context) {
+  _onBucketPressed({
+    required BuildContext context,
+    required bool isMobile,
+  }) {
     final balanceModel = Provider.of<BalanceModel>(context, listen: false);
-    showModalBottomSheet(
+
+    Widget child = ListenableProvider.value(
+      value: balanceModel,
+      child: BucketDetail(bucket: bucket),
+    );
+
+    if (isMobile) {
+      showModalBottomSheet(
         backgroundColor: Theme.of(context).backgroundColor,
         context: context,
-        builder: (BuildContext context) {
-          return ListenableProvider.value(
-            value: balanceModel,
-            child: BucketDetail(bucket: bucket),
-          );
-        });
+        builder: (BuildContext context) => child,
+      );
+    } else {
+      showDialog(
+        context: context,
+        builder: (BuildContext context) => child,
+      );
+    }
   }
 
   _getRandomColor() {
@@ -33,11 +46,12 @@ class BucketItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    double width = MediaQuery.of(context).size.width;
     double size = 150.0;
+    bool isMobile = width < Dimensions.m;
 
     return InkWell(
-      onTap: () => {_onBucketPressed(context)},
+      onTap: () => {_onBucketPressed(context: context, isMobile: isMobile)},
       child: Container(
         height: size,
         width: size,
