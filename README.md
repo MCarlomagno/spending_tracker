@@ -4,6 +4,8 @@
 
 # Spending tracker 📈 ⚖️
 
+![Web deployment](https://github.com/mcarlomagno/spending_tracker/actions/workflows/firebase-hosting-merge.yml/badge.svg)
+
 Spending tracker is a mobile application written in flutter made for a simple porpuse, to get simple and fast incomes and expenses tracking of our daily life. 
 
 ## Built with
