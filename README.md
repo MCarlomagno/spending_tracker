@@ -4,14 +4,13 @@
 
 # Spending tracker 📈 ⚖️
 
-![Web deployment](https://github.com/mcarlomagno/spending_tracker/actions/workflows/firebase-hosting-merge.yml/badge.svg)
+[![Web deployment)](https://github.com/mcarlomagno/spending_tracker/actions/workflows/firebase-hosting-merge.yml/badge.svg)](https://spending-tracker-313e0.web.app/)
 
 Spending tracker is a mobile application written in flutter made for a simple porpuse, to get simple and fast incomes and expenses tracking of our daily life. 
 
 ## Built with
 
-- [Flutter](https://flutter.dev/)
-- [SQLite](https://www.sqlite.org/index.html)
+[![flutter](https://img.shields.io/badge/Flutter-02569B?style=for-the-badge&logo=flutter&logoColor=white)](https://flutter.dev/) ❤️
 
 ## Setup
 
