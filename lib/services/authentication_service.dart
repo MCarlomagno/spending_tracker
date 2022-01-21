@@ -7,6 +7,10 @@ class AuthenticationService {
 
   User? get currentUser => this._firebaseAuth.currentUser;
 
+  AuthenticationService() {
+    _firebaseAuth.setPersistence(Persistence.LOCAL);
+  }
+
   Future loginWithEmail({
     required String email,
     required String password,
