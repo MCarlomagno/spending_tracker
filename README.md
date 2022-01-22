@@ -46,7 +46,7 @@ A transaction is a regular transaction done by the user, can be an _income_ or a
 
 ## Screenshots
 <div align="center">
-<img src="https://raw.githubusercontent.com/MCarlomagno/spending_tracker/master/assets/readme_banner.png" alt="Screenshot 1" width="100%"/>
+<img src="https://raw.githubusercontent.com/MCarlomagno/spending_tracker/master/assets/readmebanner_readme.png" alt="Screenshot 1" width="100%"/>
 </div>
 
 ## Setup
