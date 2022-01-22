@@ -20,7 +20,7 @@ A transaction is a regular transaction done by the user, can be an _income_ or a
 | Resource   |      Status      |  Link |
 |----------|:-------------:|:------|
 | Web | ✔️ | [to Web app](https://spending-tracker-313e0.web.app/) |
-| Android |    ❌   |  _soon_ |
+| Android |    ✔️   |  [to App Store](https://play.google.com/store/apps/details?id=com.mcarlomagno.spending_tracker) |
 | iOS | ❌ |   _soon_  |
 | Figma Design | ✔️ |   [to Figma Project](https://www.figma.com/file/xUheUzznOBOFl9us9n017p/spending_tracker?node-id=514%3A622) |
 
