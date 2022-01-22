@@ -1,7 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.spending_tracker">
+   <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="spending_tracker"
+        android:label="Spending Tracker"
         android:usesCleartextTraffic="true"
         android:icon="@mipmap/launcher_icon">
         <activity
