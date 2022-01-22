@@ -17,11 +17,12 @@ A transaction is a regular transaction done by the user, can be an _income_ or a
 
 ## Live access
 
-| Platform   |      Status      |  Link |
+| Resource   |      Status      |  Link |
 |----------|:-------------:|:------|
-| Web | ✔️ | https://spending-tracker-313e0.web.app/ |
+| Web | ✔️ | [to Web app](https://spending-tracker-313e0.web.app/) |
 | Android |    ❌   |  _soon_ |
 | iOS | ❌ |   _soon_  |
+| Figma Design | ✔️ |   [to Figma Project](https://www.figma.com/file/xUheUzznOBOFl9us9n017p/spending_tracker?node-id=514%3A622) |
 
 ## Built with ❤️ using Flutter and Firebase
 
@@ -54,28 +55,29 @@ A transaction is a regular transaction done by the user, can be an _income_ or a
 ### **Prerequisites**
 
 - Flutter 2.X installed in your computer. If you haven't installed it yet, follow [this guide](https://flutter.dev/docs/get-started/install).
+- [Optional] In case you want to use your own Firebase project, you can follow the [FlutterFire documentation](https://firebase.flutter.dev/docs/overview).
 
 ### Installation
 
-1- Clone the project:
+1- Clone the project
 
 ```
 git clone https://github.com/MCarlomagno/spending_tracker.git
 ```
 
-2- Open the folder:
+2- Open the folder
 
 ```
 cd spending_tracker
 ```
 
-3- Install dependencies:
+3- Install dependencies
 
 ```
 flutter pub get
 ```
 
-4- Run:
+4- Run
 
 ```
 flutter run
@@ -83,15 +85,17 @@ flutter run
 
 ## **Contributing**
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-Please make sure to update tests as appropriate.
+Pull requests and Issue openings are very welcome 😊. For major changes, please open an issue first to discuss what you would like to change.
 
 ## **Contact**
 
-Marcos Carlomagno - marcoscarlomagno1@gmail.com
+If you have any suggestion that you think does not fit as a contribution for the project (PR or Issue), or you just want to have a small talk with me, dont be shy and let's do it 😉
 
-Project Link: https://github.com/MCarlomagno/spending_tracker
+<img src="https://camo.githubusercontent.com/4a3dd8d10a27c272fd04b2ce8ed1a130606f95ea6a76b5e19ce8b642faa18c27/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f676d61696c2e737667" alt="gmail" style="width:30px;"/> marcoscarlomagno1@gmail.com<br>
+<img src="https://camo.githubusercontent.com/c8a9c5b414cd812ad6a97a46c29af67239ddaeae08c41724ff7d945fb4c047e5/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f6c696e6b6564696e2e737667" alt="linkedin" style="width:30px;"/> https://www.linkedin.com/in/marcos-carlomagno/<br>
+<img src="https://camo.githubusercontent.com/f4b401dd7cd9b7840fd31acafd49e151a80e4c9600bf219934461b96dd98e013/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f74656c656772616d2e737667" alt="telegram" style="width:30px;"/> https://t.me/marcoscarlomagno<br>
+<img src="https://camo.githubusercontent.com/a583b5ce3b463c784cb87592b3da7b9b9d014d7a16adfff04b91cb1452ae4ca2/68747470733a2f2f6564656e742e6769746875622e696f2f537570657254696e7949636f6e732f696d616765732f7376672f6d656469756d2e737667" alt="medium" style="width:30px;"/> https://mcarlomagno.medium.com/<br>
+
 
 ## **License**
 
