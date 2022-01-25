@@ -19,10 +19,10 @@ A transaction is a regular transaction done by the user, can be an _income_ or a
 
 | Resource   |      Status      |  Link |
 |----------|:-------------:|:------|
-| Web | ✔️ | [to Web app](https://spending-tracker-313e0.web.app/) |
-| Android |    ✔️   |  [to App Store](https://play.google.com/store/apps/details?id=com.mcarlomagno.spending_tracker) |
+| Web | ✔️ | <a href="https://spending-tracker-313e0.web.app/" target="_blank">to Web app</a> |
+| Android |    ✔️   | <a href="https://play.google.com/store/apps/details?id=com.mcarlomagno.spending_tracker" target="_blank">to App Store</a> |
 | iOS | ❌ |   _soon_  |
-| Figma Design | ✔️ |   [to Figma Project](https://www.figma.com/file/xUheUzznOBOFl9us9n017p/spending_tracker?node-id=514%3A622) |
+| Figma Design | ✔️ | <a href="https://www.figma.com/file/xUheUzznOBOFl9us9n017p/spending_tracker?node-id=514%3A622" target="_blank">to Figma Project</a> |
 
 ## Built with ❤️ using Flutter and Firebase
 
